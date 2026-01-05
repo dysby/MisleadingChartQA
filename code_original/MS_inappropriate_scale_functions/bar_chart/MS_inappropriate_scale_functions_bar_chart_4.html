@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar Chart with Linear Scale</title>
+    <title>Movie Ratings Bar Chart</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         body {
@@ -12,28 +12,38 @@
         .bar {
             fill: steelblue;
         }
-        .bar:hover {
-            fill: orange;
-        }
         .axis-label {
             font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <h2>Product Votes</h2>
+    <h2>Average Votes by Movie Genre</h2>
     <svg id="chart"></svg>
+
     <script>
         const data = [
-            { product: "A", scaled_votes: 10 },
-            { product: "B", scaled_votes: 20 },
-            { product: "C", scaled_votes: 50 },
-            { product: "D", scaled_votes: 100 }
+            { genre: "Action", votes: 85 },
+            { genre: "Comedy", votes: 78 },
+            { genre: "Drama", votes: 92 },
+            { genre: "Horror", votes: 65 },
+            { genre: "Sci-Fi", votes: 88 }
         ];
 
-        const margin = { top: 20, right: 30, bottom: 60, left: 70 };
+        data.forEach(d => d.scaled_votes = d.votes);
+
+        const margin = { top: 20, right: 30, bottom: 70, left: 90 };
         const width = 600 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
+
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.scaled_votes)])
+            .range([height, 0]);
+
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.genre))
+            .range([0, width])
+            .padding(0.2);
 
         const svg = d3.select("#chart")
             .attr("width", width + margin.left + margin.right)
@@ -41,21 +51,11 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const x = d3.scaleBand()
-            .domain(data.map(d => d.product))
-            .range([0, width])
-            .padding(0.2);
-
-        const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.scaled_votes)])
-            .range([height, 0]);
-
         svg.selectAll(".bar")
             .data(data)
-            .enter()
-            .append("rect")
+            .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", d => x(d.product))
+            .attr("x", d => x(d.genre))
             .attr("y", d => y(d.scaled_votes))
             .attr("width", x.bandwidth())
             .attr("height", d => height - y(d.scaled_votes));
@@ -70,16 +70,16 @@
         svg.append("text")
             .attr("class", "axis-label")
             .attr("x", width / 2)
-            .attr("y", height + margin.bottom - 10)
-            .attr("text-anchor", "middle")
-            .text("Product");
+            .attr("y", height + 50)
+            .style("text-anchor", "middle")
+            .text("Movie Genre");
 
         svg.append("text")
             .attr("class", "axis-label")
             .attr("transform", "rotate(-90)")
             .attr("x", -height / 2)
-            .attr("y", -margin.left + 15)
-            .attr("text-anchor", "middle")
+            .attr("y", -60)
+            .style("text-anchor", "middle")
             .text("Votes");
     </script>
 </body>

@@ -34,7 +34,7 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_4.csv").then(data => {
             data.forEach(d => d.scaled_votes = +d.scaled_votes);
 
-            const y = d3.scaleLinear()
+            const y = d3.scaleLog()
                 .base(10)
                 .domain([1, 100])
                 .range([height, 0]);

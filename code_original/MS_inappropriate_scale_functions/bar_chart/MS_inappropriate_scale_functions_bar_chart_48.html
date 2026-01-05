@@ -39,8 +39,8 @@
             data.forEach(d => d.transformed_votes = +d.transformed_votes);
 
             // Non-linear scale manipulation (arbitrary)
-            const y = d3.scaleLinear()
-                 // Arbitrary square root scale
+            const y = d3.scalePow()
+                .exponent(0.5) // Arbitrary square root scale
                 .domain([0, d3.max(data, d => d.transformed_votes)]) // Maximum value of the data
                 .range([height, 0]); // Pixel range
 

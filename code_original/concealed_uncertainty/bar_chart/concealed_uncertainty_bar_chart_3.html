@@ -68,18 +68,6 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.preference));
 
-            // Error bars
-            g.selectAll(".error-line")
-                .data(data)
-                .enter().append("line")
-                .attr("class", "error-line")
-                .attr("x1", d => x(d.city) + x.bandwidth() / 2)
-                .attr("x2", d => x(d.city) + x.bandwidth() / 2)
-                .attr("y1", d => y(d.preference + d.uncertainty))
-                .attr("y2", d => y(d.preference - d.uncertainty))
-                .attr("stroke", "black")
-                .attr("stroke-width", 2);
-
 
             g.append("text")
                 .attr("x", width / 2)

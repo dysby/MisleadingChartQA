@@ -51,7 +51,7 @@
                 .range([0, width]);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.Percentage)])
+                .domain([d3.min(data, d => d.Percentage), d3.max(data, d => d.Percentage)])
                 .range([height, 0]);
 
             g.append("g")

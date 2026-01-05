@@ -48,7 +48,7 @@
             .call(d3.axisBottom(x).tickFormat(d => d));
 
         g.append("g")
-            .call(d3.axisLeft(y));
+            .call(d3.axisLeft(y).tickFormat("").ticks(0));
 
         g.selectAll(".bar")
             .data(data)

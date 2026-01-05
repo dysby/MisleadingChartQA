@@ -39,7 +39,7 @@
                 d.temperature_transformed = +d.temperature_transformed;
             });
 
-            const y = d3.scaleLinear()
+            const y = d3.scalePow().exponent(0.4)
                 .domain([0, d3.max(data, d => d.temperature_transformed)])
                 .range([height, 0]);
             

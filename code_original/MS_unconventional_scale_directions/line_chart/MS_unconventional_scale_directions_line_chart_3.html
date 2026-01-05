@@ -41,7 +41,7 @@
             .range([0, width]);
 
         const y = d3.scaleLinear()
-            .domain([0, 30000])  // Inverted Y-axis for misleading effect
+            .domain([30000, 0])  // Inverted Y-axis for misleading effect
             .range([height, 0]);
 
         const line = d3.line()

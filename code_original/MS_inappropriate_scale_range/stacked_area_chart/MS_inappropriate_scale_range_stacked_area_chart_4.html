@@ -52,7 +52,7 @@
 
             // Inappropriate scale range: Y-axis starts at 15 instead of 0
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d3.sum(keys, key => d[key]))])
+                .domain([15, d3.max(data, d => d3.sum(keys, key => d[key]))])
                 .range([height, 0]);
 
             const color = d3.scaleOrdinal()

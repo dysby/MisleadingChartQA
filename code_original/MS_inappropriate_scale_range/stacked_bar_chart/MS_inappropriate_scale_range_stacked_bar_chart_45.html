@@ -58,7 +58,7 @@
                 .padding(0.3);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(stackedData.flat(), d => d[1])]) // Intentional scaling distortion
+                .domain([1000, d3.max(stackedData.flat(), d => d[1])]) // Intentional scaling distortion
                 .range([height, 0]);
 
             g.selectAll(".layer")

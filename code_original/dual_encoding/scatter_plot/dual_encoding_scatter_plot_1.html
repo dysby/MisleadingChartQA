@@ -21,12 +21,14 @@
       data.forEach(d => { d.rainfall = +d.rainfall; d.yield = +d.yield; });
       const x = d3.scaleLinear().domain(d3.extent(data, d => d.rainfall)).nice().range([0, width]);
       const y = d3.scaleLinear().domain(d3.extent(data, d => d.yield)).nice().range([height, 0]);
+      const color = d3.scaleSequential(d3.interpolateOrRd).domain(d3.extent(data, d => d.yield));
+      const radius = d3.scaleLinear().domain(d3.extent(data, d => d.yield)).range([6, 22]);
 
       svg.selectAll("circle").data(data).enter().append("circle")
         .attr("cx", d => x(d.rainfall))
         .attr("cy", d => y(d.yield))
-        .attr("r", 6)
-        .attr("fill", "steelblue")
+        .attr("r", d => radius(d.yield))
+        .attr("fill", d => color(d.yield))
         .attr("opacity", 0.9);
 
       svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));

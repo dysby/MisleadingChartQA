@@ -50,7 +50,7 @@
 
             // Intentionally setting the y domain smaller to create exceeding canvas effect
             const y = d3.scaleLinear()
-                .domain([0, Math.max(...data.map(d => +d.Sales)) ]) // Reduced max value for misleed
+                .domain([0, Math.max(...data.map(d => +d.Sales)) * 0.3]) // Reduced max value for misleed
                 .nice()
                 .range([height, 0]);
 

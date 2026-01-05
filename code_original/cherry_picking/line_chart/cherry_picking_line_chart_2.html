@@ -42,7 +42,7 @@
             });
 
             // Display only 8 years of data (1968-1975)
-            const finalData = data;
+            const finalData = data.filter(d => d.year >= 1968 && d.year <= 1975);
 
             const x = d3.scaleBand()
                 .domain(finalData.map(d => d.year))

@@ -32,15 +32,16 @@
             const x = d3.scaleBand().domain(data.map(d => d.year)).range([0, width]).padding(0.2);
             const y = d3.scaleLinear().domain([0, d3.max(data, d => d.dual_encoded_value)]).nice().range([height, 0]);
 
+            const widthScale = d3.scaleLinear().domain([0, d3.max(data, d => d.dual_encoded_value)]).range([10, x.bandwidth() * 0.8]);
             const colorScale = d3.scaleOrdinal().domain(data.map(d => d.visual_representation)).range(["blue", "red", "red", "red", "red", "red"]);
 
             svg.selectAll(".bar")
                 .data(data)
                 .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", d => x(d.year))
+                .attr("x", d => x(d.year) + (x.bandwidth() - widthScale(d.dual_encoded_value)) / 2)
                 .attr("y", d => y(d.dual_encoded_value))
-                .attr("width", x.bandwidth())
+                .attr("width", d => widthScale(d.dual_encoded_value))
                 .attr("height", d => height - y(d.dual_encoded_value))
                 .attr("fill", d => colorScale(d.visual_representation));
 

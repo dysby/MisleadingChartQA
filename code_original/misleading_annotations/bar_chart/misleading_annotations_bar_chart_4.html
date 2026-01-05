@@ -84,19 +84,18 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.employees));
 
-            // Average line annotation with correct average
-            const avg = d3.mean(data, d => d.employees);
+            // Misleading average line annotation (incorrect average)
             g.append("line")
                 .attr("class", "avg-line")
                 .attr("x1", 0)
-                .attr("y1", y(avg))
+                .attr("y1", y(150))  // Incorrect value
                 .attr("x2", width)
-                .attr("y2", y(avg));
+                .attr("y2", y(150));
 
             g.append("text")
                 .attr("class", "annotation")
                 .attr("x", width - 10)
-                .attr("y", y(avg) - 10)
+                .attr("y", y(150) - 10)
                 .attr("text-anchor", "end")
                 .text("Average");
         });

@@ -46,7 +46,7 @@
             });
 
             const maxRevenue = d3.max(data, d => d.Revenue);
-             // Misleading aspect: limiting visible range to emphasize differences
+            const yOverflow = maxRevenue - (maxRevenue * 0.75); // Misleading aspect: limiting visible range to emphasize differences
 
             const x = d3.scaleBand()
                 .domain(data.map(d => d.Year))
@@ -54,7 +54,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, maxRevenue])
+                .domain([0, maxRevenue - yOverflow])
                 .nice()
                 .range([height, 0]);
 

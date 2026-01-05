@@ -49,7 +49,7 @@
                     .padding(0.1);
 
                 const y = d3.scaleLinear()
-                    .domain([0, d3.max(data, d => d.bookstores_inverted)]) // Inverted y-axis
+                    .domain([d3.max(data, d => d.bookstores_inverted), 0]) // Inverted y-axis
                     .nice()
                     .range([0, height]);
 

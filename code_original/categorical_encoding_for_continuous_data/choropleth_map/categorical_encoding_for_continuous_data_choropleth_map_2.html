@@ -64,8 +64,15 @@
 
         // A categorical color scale for unemployment rate
         // Domain = break points in unemployment rate (%)
-        const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
-            .domain([0, 12]);
+        const colorScale = d3.scaleThreshold()
+            .domain([3, 5, 7, 9])
+            .range([
+                "#1f77b4",
+                "#ff7f0e",
+                "#2ca02c",
+                "#d62728",
+                "#9467bd"
+            ]);
 
         // Tooltip for hover info
         const tooltip = d3.select("body")

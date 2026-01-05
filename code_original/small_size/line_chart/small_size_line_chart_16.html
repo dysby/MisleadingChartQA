@@ -34,7 +34,7 @@
         const width = 1000 - margin.left - margin.right;
         const height = 750 - margin.top - margin.bottom;
 
-        const tick_label_size = "14px";
+        const tick_label_size = "4px"; // Very small font size for tick labels
 
         // Create the SVG element
         const svg = d3.select("svg")
@@ -109,7 +109,7 @@
             svg.append("text")
                 .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom / 2) + ")")
                 .style("text-anchor", "middle")
-                .style("font-size", "14px")
+                .style("font-size", "5px") // Smaller font for misleader
                 .text("Year");
 
             // Add Y-axis label
@@ -119,7 +119,7 @@
                 .attr("x", 0 - (height / 2))
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
-                .style("font-size", "14px")
+                .style("font-size", "5px") // Smaller font for misleader
                 .text("Sales");
         });
     </script>

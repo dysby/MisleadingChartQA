@@ -62,7 +62,9 @@
                 .outerRadius(radius);
 
             // Using continuous color encoding for categorical data (misleading)
-            const color = d3.scaleOrdinal(d3.schemeCategory10);
+            const color = d3.scaleSequential()
+                .domain([0, data.length - 1])
+                .interpolator(t => d3.interpolateGreens(0.2 + t * 0.6));
 
             const arcs = pie(data);
 

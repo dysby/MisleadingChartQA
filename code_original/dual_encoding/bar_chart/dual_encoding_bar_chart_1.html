@@ -33,15 +33,15 @@
             const x = d3.scaleBand().domain(data.map(d => d.period)).range([0, width]).padding(0.2);
             const y = d3.scaleLinear().domain([0, d3.max(data, d => d.days_lost)]).nice().range([height, 0]);
 
-            
+            const dualEncodingWidth = d3.scaleLinear().domain([0, d3.max(data, d => d.days_lost)]).range([10, x.bandwidth()]);
 
             svg.selectAll(".bar")
                 .data(data)
                 .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", d => x(d.period))
+                .attr("x", d => x(d.period) + (x.bandwidth() - dualEncodingWidth(d.days_lost)) / 2)
                 .attr("y", d => y(d.days_lost))
-                .attr("width", x.bandwidth())
+                .attr("width", d => dualEncodingWidth(d.days_lost))
                 .attr("height", d => height - y(d.days_lost))
                 .attr("fill", d => d.visual_cue);
 

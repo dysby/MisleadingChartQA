@@ -34,8 +34,8 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_37.csv").then(data => {
             data.forEach(d => d.transformed_votes = +d.transformed_votes);
 
-            const y = d3.scaleLinear()
-                 // Arbitrary square root scale
+            const y = d3.scalePow()
+                .exponent(0.5) // Arbitrary square root scale
                 .domain([0, 16]) // Adjust domain based on max data value for better visibility
                 .range([height, 0]);
 

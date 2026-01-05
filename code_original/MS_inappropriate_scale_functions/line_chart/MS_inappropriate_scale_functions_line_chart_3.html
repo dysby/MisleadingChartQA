@@ -38,8 +38,8 @@
                 d.transformed_gdp = +d.transformed_gdp;
             });
 
-            const y = d3.scaleLinear()
-                 // Non-linear scale
+            const y = d3.scalePow()
+                .exponent(0.5) // Non-linear scale
                 .domain(d3.extent(data, d => d.transformed_gdp))
                 .range([height, 0]);
 

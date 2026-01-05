@@ -61,9 +61,7 @@
                 .innerRadius(0)
                 .outerRadius(radius);
 
-            const color = d3.scaleSequential()
-                .domain([0, data.length - 1])
-                .interpolator(t => d3.interpolateOranges(0.3 + t * 0.5));
+            const color = d3.scaleOrdinal(d3.schemeCategory10);
 
             const arcs = pie(data);
 

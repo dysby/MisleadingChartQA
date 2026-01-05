@@ -8,21 +8,18 @@
     <style>
         .line {
             fill: none;
-            stroke-width: 1; /* Reduced stroke width for small_size effect */
         }
         .axis path,
         .axis line {
             shape-rendering: crispEdges;
-            stroke-width: 0.5; /* Reduced axis line width */
         }
         .grid line {
             stroke: lightgrey;
             stroke-opacity: 0.7;
             shape-rendering: crispEdges;
-            stroke-width: 0.5; /* Reduced grid line width */
         }
         .legend {
-            font-size: 8px; /* Reduced legend font size for small_size effect */
+            font-size: 14px;
         }
     </style>
 </head>
@@ -34,7 +31,7 @@
         const width = 1000 - margin.left - margin.right;
         const height = 750 - margin.top - margin.bottom;
 
-        const tick_label_size = "4px"; /* Small font size for misleader */
+        const tick_label_size = "14px";
 
         const svg = d3.select("svg")
             .attr("width", width + margin.left + margin.right)
@@ -98,7 +95,7 @@
             svg.append("text")
                 .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom - 6) + ")")
                 .style("text-anchor", "middle")
-                .style("font-size", "8px")  /* Small font size for misleader */
+                .style("font-size", "14px")
                 .text("Year");
 
             svg.append("text")
@@ -107,7 +104,7 @@
                 .attr("x", 0 - (height / 2))
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
-                .style("font-size", "8px")  /* Small font size for misleader */
+                .style("font-size", "14px")
                 .text("Sales");
         });
     </script>

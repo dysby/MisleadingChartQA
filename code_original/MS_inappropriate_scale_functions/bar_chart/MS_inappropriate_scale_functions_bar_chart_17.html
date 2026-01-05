@@ -34,8 +34,8 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_17.csv").then(data => {
             data.forEach(d => d.vote_scale_transformed = +d.vote_scale_transformed);
 
-            const y = d3.scalePow()
-                .exponent(0.5)
+            const y = d3.scaleLinear()
+                
                 .domain([0, d3.max(data, d => d.vote_scale_transformed)])
                 .range([height, 0]);
 

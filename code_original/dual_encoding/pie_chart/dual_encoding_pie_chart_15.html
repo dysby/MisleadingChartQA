@@ -46,18 +46,14 @@
 
         const pie = d3.pie().value(d => d.percentage);
 
-        // Dual encoding: radius difference proportional to data values
-        const baseInnerRadius = radius * 0.25;
-        const maxRadiusDiff = radius * 0.45; // Maximum radius difference to prevent overflow
-        
         const arc = d3.arc()
-            .innerRadius(baseInnerRadius)
-            .outerRadius(d => baseInnerRadius + (d.data.percentage / 100) * maxRadiusDiff);
+            .innerRadius(0)
+            .outerRadius(radius * 0.7);
             
         // label arc for positioning text
         const labelArc = d3.arc()
-            .innerRadius(baseInnerRadius + maxRadiusDiff * 0.4)
-            .outerRadius(baseInnerRadius + maxRadiusDiff * 0.4);
+            .innerRadius(radius * 0.4)
+            .outerRadius(radius * 0.4);
 
         d3.csv("../../../../data/dual_encoding/pie_chart/dual_encoding_pie_chart_15.csv").then(data => {
             data.forEach(d => {

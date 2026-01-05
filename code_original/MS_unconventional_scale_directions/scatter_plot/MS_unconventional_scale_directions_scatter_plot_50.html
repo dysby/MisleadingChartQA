@@ -37,7 +37,7 @@
 
             const x = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.sunlight))
-                .range([width, 0]);  // Inverted X-axis for the misleading effect
+                .range([0, width]);  // Inverted X-axis for the misleading effect
 
             const y = d3.scaleLinear()
                 .domain([d3.max(data, d => d.decreasing_growth), d3.min(data, d => d.decreasing_growth)])  // Normal Y-axis

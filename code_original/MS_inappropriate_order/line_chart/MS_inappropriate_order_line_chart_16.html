@@ -43,9 +43,6 @@
                 d.Stock_Price = +d.Stock_Price;
             });
 
-            // Manipulate Quarter Order (Inappropriate) - Create misleading upward trend
-            const incorrectOrder = ["Q3_2023", "Q1_2023", "Q1_2024", "Q2_2023", "Q2_2024", "Q4_2023"];
-            data.sort((a, b) => incorrectOrder.indexOf(a.Quarter) - incorrectOrder.indexOf(b.Quarter));
 
             // Scales
             const x = d3.scalePoint()

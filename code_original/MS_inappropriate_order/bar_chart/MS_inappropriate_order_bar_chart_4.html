@@ -40,16 +40,13 @@
           });
 
           // Mislead by reordering the x-axis to obscure actual trends
-          const randomOrder = [5, 0, 7, 9, 1, 10, 8, 3, 4, 2, 11, 12, 6, 13];
-          const reorderedData = randomOrder.map(i => data[i]);
-
           const x = d3.scaleBand()
-            .domain(reorderedData.map(d => d.date))
+            .domain(data.map(d => d.date))
             .range([0, width])
             .padding(0.3);
         
           const y = d3.scaleLinear()
-            .domain([0, d3.max(reorderedData, d => d.rainfall) + 10])
+            .domain([0, d3.max(data, d => d.rainfall) + 10])
             .nice()
             .range([height, 0]);
         
@@ -63,7 +60,7 @@
           g.append("g").call(d3.axisLeft(y));
         
           g.selectAll(".bar")
-            .data(reorderedData)
+            .data(data)
             .enter().append("rect")
             .attr("class", "bar")
             .attr("x", d => x(d.date))

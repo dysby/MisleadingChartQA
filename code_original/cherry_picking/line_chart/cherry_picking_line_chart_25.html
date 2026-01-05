@@ -44,7 +44,7 @@
                 d.price = +d.price;
             });
 
-            const finalData = data.filter(d => d.year >= displayStart && d.year <= displayEnd);
+            const finalData = data;
 
             const x = d3.scaleBand()
                 .domain(finalData.map(d => d.year))

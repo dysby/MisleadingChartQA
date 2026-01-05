@@ -34,8 +34,8 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_21.csv").then(data => {
             data.forEach(d => d.votes_transformed = +d.votes_transformed);
 
-            const y = d3.scalePow()
-                .exponent(0.3) // Non-linear scale for a misleading view
+            const y = d3.scaleLinear()
+                 // Non-linear scale for a misleading view
                 .domain([0, 1000])
                 .range([height, 0]);
 

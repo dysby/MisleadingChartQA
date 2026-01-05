@@ -62,12 +62,7 @@
         });
 
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_18.csv").then(data => {
-            // Manipulate the order of years: 2020, 2022, 2021, 2023, 2024, 2025
-            // This makes Development appear to have steady decline
-            data.sort((a, b) => {
-                const order = ["2020", "2022", "2024", "2021", "2023", "2025"];
-                return order.indexOf(a.year) - order.indexOf(b.year);
-            });
+            
 
             const stackedData = d3.stack()
                 .keys(categories)

@@ -48,9 +48,8 @@
             const metrics = Object.keys(data[0]).filter(key => key !== "Product");
   
             // Define intervals and colors
-            const colorScale = d3.scaleThreshold()
-                .domain([60, 70, 80, 90])  // Define intervals for performance
-                .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00"]);
+            const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
+                .domain([50, 100]);
 
             // Define x and y scales
             const x = d3.scaleBand()
@@ -93,61 +92,49 @@
                 .call(d3.axisLeft(y));
 
   
-            // Define legend intervals and colors
-            const domain = [60, 70, 80, 90];  // Performance thresholds - should match colorScale domain
-            const range = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00"];  // Colors for each range
-
-            const legendData = [];
-            // Bin 1: 0..60
-            legendData.push({
-                color: range[0],
-                min: 0,
-                max: domain[0]
-            });
-            // Bins 2..N-1
-            for (let i = 1; i < domain.length; i++) {
-                legendData.push({
-                    color: range[i],
-                    min: domain[i - 1],
-                    max: domain[i]
-                });
-            }
-            // Final bin: domain[last]..Infinity
-            legendData.push({
-                color: range[range.length - 1],
-                min: domain[domain.length - 1],
-                max: 100
-            });
-
-            // Add legend
+            // Create continuous gradient legend
+            const legendHeight = 200;
+            const legendWidth = 20;
+            
             const legend = svg.append("g")
                 .attr("class", "legend")
                 .attr("transform", "translate(" + (width + 20) + "," + margin.top + ")");
 
-            legend.selectAll("rect")
-                .data(legendData)
-                .enter()
-                .append("rect")
-                .attr("x", 0)
-                .attr("y", (_, i) => i * 25)
-                .attr("width", 20)
-                .attr("height", 20)
-                .attr("fill", d => d.color);
+            // Create gradient
+            const defs = svg.append("defs");
+            const linearGradient = defs.append("linearGradient")
+                .attr("id", "perf-gradient")
+                .attr("x1", "0%")
+                .attr("y1", "100%")
+                .attr("x2", "0%")
+                .attr("y2", "0%");
 
-            legend.selectAll("text")
-                .data(legendData)
-                .enter()
-                .append("text")
-                .attr("x", 30)
-                .attr("y", (_, i) => i * 25 + 14)
-                .text(d => {
-                    if (d.max === 100) {
-                        return `${d.min}+`;
-                    } else {
-                        return `${d.min} - ${d.max}`;
-                    }
-                })
-                .attr("class", "legend-text");
+            // Create gradient stops
+            const numStops = 10;
+            for (let i = 0; i <= numStops; i++) {
+                const value = 50 + (i / numStops) * 50;
+                linearGradient.append("stop")
+                    .attr("offset", (i / numStops * 100) + "%")
+                    .attr("stop-color", colorScale(value));
+            }
+
+            // Draw legend rectangle
+            legend.append("rect")
+                .attr("width", legendWidth)
+                .attr("height", legendHeight)
+                .style("fill", "url(#perf-gradient)");
+
+            // Add legend scale
+            const legendScale = d3.scaleLinear()
+                .domain([50, 100])
+                .range([legendHeight, 0]);
+
+            const legendAxis = d3.axisRight(legendScale)
+                .ticks(6);
+
+            legend.append("g")
+                .attr("transform", "translate(" + legendWidth + ", 0)")
+                .call(legendAxis);
         });
     </script>
 <!-- Code injected by live-server -->

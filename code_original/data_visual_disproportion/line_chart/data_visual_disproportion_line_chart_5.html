@@ -48,7 +48,6 @@
             data.forEach(d => {
                 d.month = d.month;
                 d.quality = +d.quality;
-                d.height = +d.height;
             });
 
             const x = d3.scaleBand()
@@ -57,7 +56,7 @@
                 .padding(0.3);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.height)])
+                .domain([0, d3.max(data, d => d.quality)])
                 .range([height, 0]);
 
             g.append("g")
@@ -69,7 +68,7 @@
 
             const line = d3.line()
                 .x(d => x(d.month) + x.bandwidth() / 2)
-                .y(d => y(d.height));
+                .y(d => y(d.quality));
 
             g.append("path")
                 .datum(data)
@@ -82,7 +81,7 @@
                 .enter().append("circle")
                 .attr("class", "dot")
                 .attr("cx", d => x(d.month) + x.bandwidth() / 2)
-                .attr("cy", d => y(d.height))
+                .attr("cy", d => y(d.quality))
                 .attr("r", 6);
 
             // Labels
@@ -91,7 +90,7 @@
                 .enter().append("text")
                 .attr("class", "text-label")
                 .attr("x", d => x(d.month) + x.bandwidth() / 2)
-                .attr("y", d => y(d.height) - 10)
+                .attr("y", d => y(d.quality) - 10)
                 .text(d => d.quality);
 
             g.append("text")

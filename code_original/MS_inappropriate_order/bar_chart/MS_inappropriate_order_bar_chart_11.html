@@ -37,11 +37,8 @@
             data.forEach(d => {
                 d.date = d.date;
                 d.rainfall = +d.rainfall;
-                d.order = +d.order;
             });
 
-            // Sort by chronological order
-            data.sort((a, b) => a.order - b.order);
 
             const x = d3.scaleBand()
                 .domain(data.map(d => d.date))

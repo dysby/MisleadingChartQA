@@ -62,10 +62,6 @@
         });
 
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_13.csv").then(data => {
-            // Manipulate the order of years: 2018, 2020, 2019, 2021, 2022, 2023
-            // This makes Leadership Training appear to have steady growth
-                return order.indexOf(a.year) - order.indexOf(b.year);
-            });
 
             const stackedData = d3.stack()
                 .keys(["Technical Training", "Leadership Training", "Soft Skills Training"])

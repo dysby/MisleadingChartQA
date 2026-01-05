@@ -41,7 +41,7 @@
 
           // Mislead by reordering the x-axis to obscure actual trends
           
-          const reorderedData = randomOrder.map(i => data[i]);
+          const reorderedData = data.map(i => data[i]);
 
           const x = d3.scaleBand()
             .domain(reorderedData.map(d => d.date))

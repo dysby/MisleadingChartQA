@@ -86,7 +86,7 @@
                 .enter().append("text")
                 .attr("class", "label")
                 .attr("x", d => x(d.Year) + x.bandwidth() / 2)
-                .attr("y", d => y(+d.Revenue) - 5)
+                .attr("y", d => y(+d.Revenue) + 15)
                 .text(d => d.Revenue)
                 .style("fill", "black")
                 .style("font-size", "12px");

@@ -39,10 +39,7 @@
             d.rainfall = +d.rainfall;
           });
         
-          // Reorder data to mislead
           
-          const data = data.map(i => data[i - 1]);
-
           const x = d3.scaleBand()
             .domain(data.map(d => d.date))
             .range([0, width])

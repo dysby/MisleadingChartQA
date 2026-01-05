@@ -64,8 +64,6 @@
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_14.csv").then(data => {
             // Manipulate the order of years: 2019, 2021, 2020, 2022, 2023, 2024
             // This makes Software appear to have steady growth
-            data.sort((a, b) => {
-                const order = ["2019", "2021", "2020", "2022", "2023", "2024"];
                 return order.indexOf(a.year) - order.indexOf(b.year);
             });
 

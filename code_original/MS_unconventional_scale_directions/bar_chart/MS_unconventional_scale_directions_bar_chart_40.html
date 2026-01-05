@@ -41,13 +41,13 @@
         d3.csv("../../../../data/MS_unconventional_scale_directions/bar_chart/MS_unconventional_scale_directions_bar_chart_40.csv")
             .then(data => {
                 data.forEach(d => {
-                    d.inverted_year = +d.inverted_year;
+                    d.year = +d.year;
                     d.bookstores = +d.bookstores;
                 });
 
                 const x = d3.scaleBand()
-                    .domain(data.map(d => d.inverted_year).sort((a, b) => a - b))
-                    .range([width, 0])  // Inverted x-axis
+                    .domain(data.map(d => d.year).sort((a, b) => a - b))
+                    .range([0, width])  // Inverted x-axis
                     .padding(0.1);
 
                 const y = d3.scaleLinear()
@@ -59,7 +59,7 @@
                     .data(data)
                     .enter().append("rect")
                     .attr("class", "bar")
-                    .attr("x", d => x(d.inverted_year))
+                    .attr("x", d => x(d.year))
                     .attr("y", d => y(d.bookstores))
                     .attr("width", x.bandwidth())
                     .attr("height", d => height - y(d.bookstores));

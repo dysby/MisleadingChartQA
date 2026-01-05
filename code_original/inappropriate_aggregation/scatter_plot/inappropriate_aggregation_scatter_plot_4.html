@@ -77,8 +77,6 @@
                 .attr("cy", d => y(d.housing_cost_k))
                 .attr("r", 4);
 
-            const xMean = d3.mean(data, d => d.income_k);
-            const yMean = d3.mean(data, d => d.housing_cost_k);
             
             const numerator = d3.sum(data, d => (d.income_k - xMean) * (d.housing_cost_k - yMean));
             const denominator = d3.sum(data, d => (d.income_k - xMean) * (d.income_k - xMean));

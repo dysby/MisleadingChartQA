@@ -39,7 +39,6 @@
             d.rainfall = +d.rainfall;
           });
 
-          const orderedData = data.sort((a, b) => a.order - b.order);
 
           const x = d3.scaleBand()
             .domain(orderedData.map(d => d.date))

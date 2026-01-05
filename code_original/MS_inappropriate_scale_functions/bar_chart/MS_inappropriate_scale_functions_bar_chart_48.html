@@ -36,12 +36,12 @@
         // Load data
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_48.csv").then(data => {
             // Convert votes to numbers
-            data.forEach(d => d.transformed_votes = +d.transformed_votes);
+            data.forEach(d => d.value = +d.value);
 
             // Non-linear scale manipulation (arbitrary)
             const y = d3.scalePow()
                 .exponent(0.5) // Arbitrary square root scale
-                .domain([0, d3.max(data, d => d.transformed_votes)]) // Maximum value of the data
+                .domain([0, d3.max(data, d => d.value)]) // Maximum value of the data
                 .range([height, 0]); // Pixel range
 
             const x = d3.scaleBand()
@@ -63,8 +63,8 @@
                 .enter().append("rect")
                 .attr("class", "bar")
                 .attr("x", d => x(d.candidate))
-                .attr("y", d => y(d.transformed_votes))
-                .attr("height", d => height - y(d.transformed_votes))
+                .attr("y", d => y(d.value))
+                .attr("height", d => height - y(d.value))
                 .attr("width", x.bandwidth());
 
             // Add axis labels

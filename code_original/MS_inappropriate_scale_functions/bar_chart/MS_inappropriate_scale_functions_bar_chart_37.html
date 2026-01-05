@@ -32,7 +32,7 @@
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_37.csv").then(data => {
-            data.forEach(d => d.transformed_votes = +d.transformed_votes);
+            data.forEach(d => d.value = +d.value);
 
             const y = d3.scalePow()
                 .exponent(0.5) // Arbitrary square root scale
@@ -56,8 +56,8 @@
                 .enter().append("rect")
                 .attr("class", "bar")
                 .attr("x", d => x(d.candidate))
-                .attr("y", d => y(d.transformed_votes))
-                .attr("height", d => height - y(d.transformed_votes))
+                .attr("y", d => y(d.value))
+                .attr("height", d => height - y(d.value))
                 .attr("width", x.bandwidth());
 
             svg.append("text")

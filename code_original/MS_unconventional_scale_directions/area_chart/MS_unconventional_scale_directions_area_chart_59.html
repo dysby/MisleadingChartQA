@@ -39,11 +39,11 @@
         d3.csv("../../../../data/MS_unconventional_scale_directions/area_chart/MS_unconventional_scale_directions_area_chart_59.csv").then(data => {
             data.forEach(d => {
                 d.date = new Date(d.date);
-                d.inverted_apples = +d.inverted_apples;
+                d.apples = +d.apples;
             });
 
             x.domain(d3.extent(data, d => d.date));
-            y.domain([d3.max(data, d => d.inverted_apples), 0]);
+            y.domain([d3.max(data, d => d.apples), 0]);
 
             const xAxis = d3.axisBottom(x)
                 .ticks(data.length)
@@ -53,7 +53,7 @@
             const area = d3.area()
                 .x(d => x(d.date))
                 .y0(height)
-                .y1(d => y(d.inverted_apples));
+                .y1(d => y(d.apples));
 
             svg.append("path")
                 .datum(data)

@@ -37,7 +37,7 @@
         d3.csv("../../../../data/data_visual_disproportion/scatter_plot/data_visual_disproportion_scatter_plot_13.csv").then(data => {
           data.forEach(d => {
             d.actual_value = +d.actual_value;
-            d.display_height = +d.display_height;
+            d.height = +d.height;
           });
 
           // Extract categories
@@ -76,7 +76,7 @@
               .append("circle")
               .attr("class", "dot")
               .attr("cx", d => x(d.item) + x.bandwidth() / 2)
-              .attr("cy", d => y(d.display_height))
+              .attr("cy", d => y(d.height))
               .attr("r", 10);
 
           // Labels
@@ -86,7 +86,7 @@
               .append("text")
               .attr("class", "label")
               .attr("x", d => x(d.item) + x.bandwidth() / 2)
-              .attr("y", d => y(d.display_height) - 15)
+              .attr("y", d => y(d.height) - 15)
               .attr("text-anchor", "middle")
               .text(d => `${d.actual_value}%`)
               .style("font-size", "12px");

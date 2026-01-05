@@ -77,8 +77,6 @@
                 .attr("cy", d => y(d.productivity_score))
                 .attr("r", 4);
 
-            const xMean = d3.mean(data, d => d.training_hours);
-            const yMean = d3.mean(data, d => d.productivity_score);
             
             const numerator = d3.sum(data, d => (d.training_hours - xMean) * (d.productivity_score - yMean));
             const denominator = d3.sum(data, d => (d.training_hours - xMean) * (d.training_hours - xMean));

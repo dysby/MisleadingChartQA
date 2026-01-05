@@ -77,8 +77,6 @@
                 .attr("cy", d => y(d.exam_score))
                 .attr("r", 4);
 
-            const xMean = d3.mean(data, d => d.study_hours);
-            const yMean = d3.mean(data, d => d.exam_score);
             
             const numerator = d3.sum(data, d => (d.study_hours - xMean) * (d.exam_score - yMean));
             const denominator = d3.sum(data, d => (d.study_hours - xMean) * (d.study_hours - xMean));

@@ -42,7 +42,7 @@
 
             const y = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.growth_inverted).reverse())
-                .range([height, 0]);
+                .range([0, height]);
 
             svg.selectAll("circle")
                 .data(data)

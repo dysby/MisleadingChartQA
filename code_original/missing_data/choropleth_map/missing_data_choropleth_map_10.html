@@ -76,7 +76,7 @@
 
                 // Only show labels for key regions (A, B, C, D, E)
                 svg.selectAll(".region-label")
-                    .data(data.filter(d => ['R-A', 'R-B', 'R-C', 'R-D', 'R-E'].includes(d.code)))
+                    .data(data))
                     .join("text")
                     .attr("class", "region-label")
                     .attr("x", d => {

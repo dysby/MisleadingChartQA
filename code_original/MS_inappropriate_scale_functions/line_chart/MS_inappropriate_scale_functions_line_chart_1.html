@@ -48,7 +48,7 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/line_chart/MS_inappropriate_scale_functions_line_chart_1.csv").then(data => {
             data.forEach(d => {
                 d.year = +d.year;
-                d.transformed_gdp = +d.transformed_gdp;
+                d.value = +d.value;
             });
 
             const x = d3.scaleLinear()
@@ -68,7 +68,7 @@
 
             const line = d3.line()
                 .x(d => x(d.year))
-                .y(d => y(d.transformed_gdp));
+                .y(d => y(d.value));
 
             svg.append("path")
                 .datum(data)
@@ -80,7 +80,7 @@
                 .enter().append("circle")
                 .attr("class", "dot")
                 .attr("cx", d => x(d.year))
-                .attr("cy", d => y(d.transformed_gdp))
+                .attr("cy", d => y(d.value))
                 .attr("r", 4);
 
             svg.append("text")

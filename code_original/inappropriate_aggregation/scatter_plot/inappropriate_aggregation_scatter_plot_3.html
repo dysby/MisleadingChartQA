@@ -77,8 +77,6 @@
                 .attr("cy", d => y(d.recovery_days))
                 .attr("r", 4);
 
-            const xMean = d3.mean(data, d => d.patient_age);
-            const yMean = d3.mean(data, d => d.recovery_days);
             
             const numerator = d3.sum(data, d => (d.patient_age - xMean) * (d.recovery_days - yMean));
             const denominator = d3.sum(data, d => (d.patient_age - xMean) * (d.patient_age - xMean));

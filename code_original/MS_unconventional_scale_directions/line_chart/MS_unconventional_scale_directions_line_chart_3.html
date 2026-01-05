@@ -41,7 +41,7 @@
 
         const y = d3.scaleLinear()
             .domain([30000, 0])
-            .range([height, 0]);
+            .range([0, height]);
 
         const line = d3.line()
             .x(d => x(d.month))

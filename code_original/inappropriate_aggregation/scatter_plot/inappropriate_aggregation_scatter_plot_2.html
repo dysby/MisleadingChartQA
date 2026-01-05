@@ -77,8 +77,6 @@
                 .attr("cy", d => y(d.satisfaction_score))
                 .attr("r", 4);
 
-            const xMean = d3.mean(data, d => d.experience_years);
-            const yMean = d3.mean(data, d => d.satisfaction_score);
             
             const numerator = d3.sum(data, d => (d.experience_years - xMean) * (d.satisfaction_score - yMean));
             const denominator = d3.sum(data, d => (d.experience_years - xMean) * (d.experience_years - xMean));

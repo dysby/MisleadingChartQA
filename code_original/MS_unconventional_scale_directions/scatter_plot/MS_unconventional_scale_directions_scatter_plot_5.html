@@ -48,7 +48,7 @@
 
             const x = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.sunlight_inverted))
-                .range([width, 0]);
+                .range([0, width]);
 
             const y = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.growth_inverted))

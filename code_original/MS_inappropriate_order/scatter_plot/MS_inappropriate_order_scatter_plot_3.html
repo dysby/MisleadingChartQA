@@ -36,9 +36,7 @@
             d.salary = +d.salary;
           });
 
-          // Inappropriate color encoding: Uses progressive blue colors but not in logical hierarchy order
           // Logical hierarchy: Entry->Mid->Senior->Executive should go light->dark
-          // But color assignment doesn't match this progression
           const categories = ["Entry Level", "Mid Level", "Senior Level", "Executive Level"];
           const color = d3.scaleOrdinal()
             .domain(categories)

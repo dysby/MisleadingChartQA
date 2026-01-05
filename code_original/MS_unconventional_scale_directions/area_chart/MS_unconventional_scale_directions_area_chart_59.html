@@ -43,7 +43,7 @@
             });
 
             x.domain(d3.extent(data, d => d.date));
-            y.domain([d3.max(data, d => d.inverted_apples), 0]); // Inverted Y-axis for misleading effect
+            y.domain([0, d3.max(data, d => d.inverted_apples)]); // Inverted Y-axis for misleading effect
 
             const xAxis = d3.axisBottom(x)
                 .ticks(data.length)

@@ -36,9 +36,6 @@
             d.progress = +d.progress;
           });
 
-          // Inappropriate color encoding: Uses progressive red colors but not in logical experience order
-          // Logical progression: Beginner->Intermediate->Advanced->Expert should go light->dark
-          // But color assignment doesn't match this skill progression
           const categories = ["Beginner", "Intermediate", "Advanced", "Expert"];
           const color = d3.scaleOrdinal()
             .domain(categories)

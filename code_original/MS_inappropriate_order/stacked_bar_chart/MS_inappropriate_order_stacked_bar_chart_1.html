@@ -62,7 +62,6 @@
         });
 
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_1.csv").then(data => {
-            data.sort((a, b) => ((a.year === "2000" ? 0 : a.year === "2002" ? 1 : a.year === "2001" ? 2 : a.year === "2003" ? 3 : a.year === "2004" ? 4 : 5) 
                                 - (b.year === "2000" ? 0 : b.year === "2002" ? 1 : b.year === "2001" ? 2 : b.year === "2003" ? 3 : b.year === "2004" ? 4 : 5)));
 
             const stackedData = d3.stack()

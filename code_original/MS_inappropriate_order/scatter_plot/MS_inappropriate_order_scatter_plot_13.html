@@ -36,13 +36,10 @@
             d.test_score = +d.test_score;
           });
 
-          // Inappropriate color encoding: Uses progressive green colors but not in logical grade order
-          // Logical progression: Freshman->Sophomore->Junior->Senior should go light->dark
-          // But color assignment doesn't match this academic progression
           const categories = ["Freshman", "Sophomore", "Junior", "Senior"];
           const color = d3.scaleOrdinal()
             .domain(categories)
-            .range(["#0d5016", "#e8f5e8", "#2ca02c", "#90d690"]); // Dark, lightest, medium-dark, light
+            .range(["#e8f5e8", "#90d690", "#2ca02c", "#0d5016"]); // Dark, lightest, medium-dark, light
 
           const x = d3.scaleLinear().domain([0, 15]).range([0, width]);
           const y = d3.scaleLinear().domain([50, 100]).range([height, 0]);

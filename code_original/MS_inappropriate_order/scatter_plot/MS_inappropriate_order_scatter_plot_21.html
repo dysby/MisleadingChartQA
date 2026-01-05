@@ -36,9 +36,6 @@
             d.price = +d.price;
           });
 
-          // Inappropriate color encoding: Uses progressive purple colors but not in logical bedroom order
-          // Logical progression: Studio->1BR->2BR->3BR->4+BR should go light->dark
-          // But color assignment doesn't match this size progression
           const categories = ["Studio", "1 Bedroom", "2 Bedroom", "3 Bedroom"];
           const color = d3.scaleOrdinal()
             .domain(categories)

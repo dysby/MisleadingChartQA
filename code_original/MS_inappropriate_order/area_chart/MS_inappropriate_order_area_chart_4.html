@@ -42,8 +42,6 @@
                 d.sales = +d.sales;
             });
 
-            const incorrectOrder = ["Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"];
-            data.sort((a, b) => incorrectOrder.indexOf(a.month) - incorrectOrder.indexOf(b.month));
 
             const x = d3.scalePoint()
                 .domain(data.map(d => d.month))

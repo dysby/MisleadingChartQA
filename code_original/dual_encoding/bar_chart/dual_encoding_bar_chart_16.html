@@ -49,10 +49,6 @@
                 .domain([0, d3.max(data, d => d.Lost_Days)])
                 .range([height, 0]);
 
-            const widthScale = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.Lost_Days)])
-                .range([5, x.bandwidth() * 1.5]);
-
             const colorScale = d3.scaleLinear()
                 .domain([0, d3.max(data, d => d.Lost_Days)])
                 .range(["lightblue", "red"]);
@@ -61,9 +57,9 @@
                 .data(data)
                 .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", d => x(d.Year) + (x.bandwidth() - widthScale(d.Lost_Days)) / 2)
+                .attr("x", d => x(d.Year))
                 .attr("y", d => y(d.Lost_Days))
-                .attr("width", d => widthScale(d.Lost_Days))
+                .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.Lost_Days))
                 .attr("fill", d => colorScale(d.Lost_Days));
 

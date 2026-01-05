@@ -50,10 +50,6 @@
                 .nice()
                 .range([height, 0]);
 
-            const widthScale = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.usage_percentage)])
-                .range([12, x.bandwidth() * 0.8]);
-
             const colorScale = d3.scaleLinear()
                 .domain([0, d3.max(data, d => d.usage_percentage)])
                 .range(["lightblue", "darkblue"]);
@@ -62,9 +58,9 @@
                 .data(data)
                 .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", d => x(d.region) + (x.bandwidth() - widthScale(d.usage_percentage)) / 2)
+                .attr("x", d => x(d.region))
                 .attr("y", d => y(d.usage_percentage))
-                .attr("width", d => widthScale(d.usage_percentage))
+                .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.usage_percentage))
                 .attr("fill", d => colorScale(d.usage_percentage));
 

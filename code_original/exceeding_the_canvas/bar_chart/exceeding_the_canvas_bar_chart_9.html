@@ -54,7 +54,7 @@
 
             // Adjust Y-axis scale to clip the bars, misrepresenting them as same in height
             const y = d3.scaleLinear()
-                .domain([0, maxRevenueExceeded * 0.8]) // Intentionally low max value to create misleading view
+                .domain([0, maxRevenueExceeded])
                 .nice()
                 .range([height, 0]);
 

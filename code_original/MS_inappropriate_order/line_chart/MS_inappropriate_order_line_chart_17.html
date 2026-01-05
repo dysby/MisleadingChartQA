@@ -43,7 +43,6 @@
                 d.Test_Score = +d.Test_Score;
             });
 
-            // Manipulate Month Order (Inappropriate) - Create misleading volatility 
             const incorrectOrder = ["Mar", "Jul", "Jan", "May", "Aug", "Feb", "Jun", "Apr"];
             data.sort((a, b) => incorrectOrder.indexOf(a.Month) - incorrectOrder.indexOf(b.Month));
 

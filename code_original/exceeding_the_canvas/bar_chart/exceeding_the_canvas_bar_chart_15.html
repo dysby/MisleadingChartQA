@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Bar Chart with Misleading Scale</title>
+    <title>Revenue Bar Chart</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .bar {
@@ -46,8 +46,7 @@
             });
 
             const maxRevenue = d3.max(data, d => d.Revenue);
-            const yOverflow = maxRevenue - (maxRevenue * 0.75); // Misleading aspect: limiting visible range to emphasize differences
-
+            
             const x = d3.scaleBand()
                 .domain(data.map(d => d.Year))
                 .range([0, width])

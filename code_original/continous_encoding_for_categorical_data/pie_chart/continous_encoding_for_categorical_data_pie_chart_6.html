@@ -61,7 +61,6 @@
                 .innerRadius(0)
                 .outerRadius(radius);
 
-            // Using continuous color encoding for categorical data (misleading)
             const color = d3.scaleSequential()
                 .domain([0, data.length - 1])
                 .interpolator(t => d3.interpolateBlues(0.3 + t * 0.6));
@@ -74,7 +73,7 @@
                 .attr("class", "arc")
                 .append("path")
                 .attr("d", arc)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.Category));
 
             svg.selectAll(".arc-label")
                 .data(arcs)
@@ -99,7 +98,7 @@
                 .attr("y", (d, i) => i * 25)
                 .attr("width", 20)
                 .attr("height", 20)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.Category));
 
             legend.selectAll("text")
                 .data(arcs)

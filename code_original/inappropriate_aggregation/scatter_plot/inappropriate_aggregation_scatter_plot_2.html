@@ -77,7 +77,6 @@
                 .attr("cy", d => y(d.satisfaction_score))
                 .attr("r", 4);
 
-            // Calculate overall trend line (misleading aggregation)
             const xMean = d3.mean(data, d => d.experience_years);
             const yMean = d3.mean(data, d => d.satisfaction_score);
             

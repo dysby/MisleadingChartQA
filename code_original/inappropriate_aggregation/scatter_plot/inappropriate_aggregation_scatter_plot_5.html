@@ -77,7 +77,6 @@
                 .attr("cy", d => y(d.productivity_score))
                 .attr("r", 4);
 
-            // Calculate overall trend line (misleading aggregation)
             const xMean = d3.mean(data, d => d.training_hours);
             const yMean = d3.mean(data, d => d.productivity_score);
             

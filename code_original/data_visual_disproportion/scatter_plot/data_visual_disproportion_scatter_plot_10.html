@@ -45,8 +45,6 @@
                     .domain(data.map(d => d.option))
                     .range([0, width])
                     .padding(0.4);
-
-                // Misleading Y-scale exaggerates variance in visual heights
                 const y = d3.scaleLinear()
                     .domain([0, d3.max(data, d => d.visual_height)])
                     .range([height, 0]);

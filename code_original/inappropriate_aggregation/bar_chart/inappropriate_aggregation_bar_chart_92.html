@@ -60,13 +60,6 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.PartialEnergyUsage));
 
-            g.append("line")
-                .attr("class", "avg-line")
-                .attr("x1", 0)
-                .attr("y1", y(20))
-                .attr("x2", width)
-                .attr("y2", y(20));
-
             g.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
             g.append("g").call(d3.axisLeft(y));
 

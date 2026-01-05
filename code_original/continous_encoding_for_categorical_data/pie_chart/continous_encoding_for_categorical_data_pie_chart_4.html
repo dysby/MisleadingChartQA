@@ -72,7 +72,7 @@
                 .attr("class", "arc")
                 .append("path")
                 .attr("d", arc)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.Category));
 
             svg.selectAll(".arc-label")
                 .data(arcs)
@@ -95,7 +95,7 @@
                 .attr("y", (d, i) => i * 20)
                 .attr("width", 18)
                 .attr("height", 18)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.Category));
 
             legend.selectAll("text")
                 .data(arcs)

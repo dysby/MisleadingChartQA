@@ -84,20 +84,6 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.products));
 
-            // Misleading average line annotation (incorrect average)
-            g.append("line")
-                .attr("class", "avg-line")
-                .attr("x1", 0)
-                .attr("y1", y(50))  // Incorrect value
-                .attr("x2", width)
-                .attr("y2", y(50));
-
-            g.append("text")
-                .attr("class", "annotation")
-                .attr("x", width - 10)
-                .attr("y", y(50) - 10)
-                .attr("text-anchor", "end")
-                .text("Average");
         });
     </script>
 </body>

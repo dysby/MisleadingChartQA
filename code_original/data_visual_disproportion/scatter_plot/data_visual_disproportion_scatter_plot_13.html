@@ -37,13 +37,12 @@
         d3.csv("../../../../data/data_visual_disproportion/scatter_plot/data_visual_disproportion_scatter_plot_13.csv").then(data => {
           data.forEach(d => {
             d.actual_value = +d.actual_value;
-            d.display_height = +d.display_height; // We'll use this for the misleading visual effect.
+            d.display_height = +d.display_height;
           });
 
           // Extract categories
           const categories = data.map(d => d.item);
 
-          // Scales with misleading representation
           const x = d3.scaleBand().domain(categories).range([0, width]).padding(0.4);
           const y = d3.scaleLinear().domain([0, 60]).range([height, 0]);
 
@@ -69,9 +68,8 @@
               .attr("x", -height / 2)
               .attr("y", -50)
               .attr("text-anchor", "middle")
-              .text("Percentage (Misleading)");
+              .text("Percentage");
 
-          // Plot points with misleading scale
           svg.selectAll(".dot")
               .data(data)
               .enter()

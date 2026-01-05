@@ -77,7 +77,6 @@
                 .attr("cy", d => y(d.exam_score))
                 .attr("r", 4);
 
-            // Calculate overall trend line (misleading aggregation)
             const xMean = d3.mean(data, d => d.study_hours);
             const yMean = d3.mean(data, d => d.exam_score);
             

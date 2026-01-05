@@ -39,7 +39,7 @@
                 
             // The misleading y-axis starts at 7500 instead of 0
             const y = d3.scaleLinear()
-                .domain([7500, d3.max(data, d => d.TicketsSold)])
+                .domain([0, d3.max(data, d => d.TicketsSold)])
                 .range([height, 0]);
 
             g.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
@@ -70,6 +70,3 @@
     </script>
 </body>
 </html>
-
-
-This HTML content reflects the required adjustments to ensure the Y-axis is manipulating the scale misleadingly, without directly indicating or annotating this manipulation in the visualization for the user.

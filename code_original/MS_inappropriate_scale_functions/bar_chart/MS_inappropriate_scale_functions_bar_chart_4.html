@@ -34,7 +34,7 @@
         d3.csv("../../../../data/MS_inappropriate_scale_functions/bar_chart/MS_inappropriate_scale_functions_bar_chart_4.csv").then(data => {
             data.forEach(d => d.scaled_votes = +d.scaled_votes);
 
-            const y = d3.scaleLog()
+            const y = d3.scaleLinear()
                 .base(10)
                 .domain([1, 100])
                 .range([height, 0]);
@@ -78,8 +78,3 @@
     </script>
 </body>
 </html>
-
-
-Changes made:
-1. Updated the data source path as specified.
-2. Added a label "(Log Scale)" to the Y-axis label to denote that a logarithmic scale is used.

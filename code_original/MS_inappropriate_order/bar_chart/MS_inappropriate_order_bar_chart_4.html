@@ -40,16 +40,13 @@
           });
 
           // Mislead by reordering the x-axis to obscure actual trends
-          const randomOrder = [5, 0, 7, 9, 1, 10, 8, 3, 4, 2, 11, 12, 6, 13];
-          const reorderedData = randomOrder.map(i => data[i]);
-
           const x = d3.scaleBand()
-            .domain(reorderedData.map(d => d.date))
+            .domain(data.map(d => d.date))
             .range([0, width])
             .padding(0.3);
         
           const y = d3.scaleLinear()
-            .domain([0, d3.max(reorderedData, d => d.rainfall) + 10])
+            .domain([0, d3.max(data, d => d.rainfall) + 10])
             .nice()
             .range([height, 0]);
         
@@ -63,7 +60,7 @@
           g.append("g").call(d3.axisLeft(y));
         
           g.selectAll(".bar")
-            .data(reorderedData)
+            .data(data)
             .enter().append("rect")
             .attr("class", "bar")
             .attr("x", d => x(d.date))
@@ -85,43 +82,6 @@
             .text("Rainfall (mm)");
         });
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+
 </body>
 </html>

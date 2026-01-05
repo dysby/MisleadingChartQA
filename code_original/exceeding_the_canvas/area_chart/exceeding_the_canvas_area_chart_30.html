@@ -52,9 +52,7 @@
                 .nice()
                 .range([height, 0]);
             
-            const yOverflow = d3.scaleLinear()
-                .domain([1500, d3.max(data, d => +d.Revenue)])
-                .range([-50, -100]); 
+             
 
             const area = d3.area()
                 .x(d => x(d.Year) + x.bandwidth() / 2)

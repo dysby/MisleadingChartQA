@@ -48,9 +48,10 @@
             const months = Object.keys(data[0]).filter(key => key !== "City");
   
             // Define intervals and colors
-            const colorScale = d3.scaleThreshold()
-                .domain([5, 10, 15, 20, 25])  // Define intervals for temperature
-                .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00"]);
+            const colorScale = d3.scaleSequential()
+                .domain([d3.min(data.flatMap(d => months.map(m => +d[m]))), 
+                         d3.max(data.flatMap(d => months.map(m => +d[m])))])
+                .interpolator(d3.interpolateRdYlBu);
 
             // Define x and y scales
             const x = d3.scaleBand()

@@ -8,7 +8,7 @@
     <style>
         .line {
             fill: none;
-            stroke-width: 0.5; /* Further reduce line thickness for misleader description */
+            stroke-width: 2; /* Further reduce line thickness for misleader description */
         }
         .axis path,
         .axis line {
@@ -20,7 +20,7 @@
             shape-rendering: crispEdges;
         }
         text {
-            font-size: 2px; /* Further reduce font size to enhance the misleader */
+            font-size: 12px; /* Further reduce font size to enhance the misleader */
         }
     </style>
 </head>
@@ -32,7 +32,7 @@
         const margin = { top: 30, right: 40, bottom: 70, left: 60 };
         const width = 1000 - margin.left - margin.right;
         const height = 750 - margin.top - margin.bottom;
-        const tick_label_size = "2px"; // Further reduced label size
+        const tick_label_size = "12px"; // Further reduced label size
 
         const svg = d3.select("svg")
             .attr("width", width + margin.left + margin.right)

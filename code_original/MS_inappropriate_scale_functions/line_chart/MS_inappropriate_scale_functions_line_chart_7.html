@@ -43,7 +43,7 @@
                 .domain(d3.extent(data, d => d.year))
                 .range([0, width]);
 
-            const y = d3.scalePow().exponent(0.3)
+            const y = d3.scaleLinear()
                 .domain([0, d3.max(data, d => d.stock_price_transformed)])
                 .range([height, 0]);
 

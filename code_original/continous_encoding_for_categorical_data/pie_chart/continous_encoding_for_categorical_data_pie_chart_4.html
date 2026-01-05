@@ -60,9 +60,7 @@
                 .innerRadius(0)
                 .outerRadius(radius);
 
-            const color = d3.scaleSequential()
-                .domain([0, data.length - 1])
-                .interpolator(t => d3.interpolateBlues(0.3 + t * 0.4));
+            const color = d3.scaleOrdinal(d3.schemeCategory10);
 
             const arcs = pie(data);
 
@@ -72,7 +70,7 @@
                 .attr("class", "arc")
                 .append("path")
                 .attr("d", arc)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.region));
 
             svg.selectAll(".arc-label")
                 .data(arcs)
@@ -95,7 +93,7 @@
                 .attr("y", (d, i) => i * 20)
                 .attr("width", 18)
                 .attr("height", 18)
-                .attr("fill", (d, i) => color(i));
+                .attr("fill", d => color(d.data.region));
 
             legend.selectAll("text")
                 .data(arcs)

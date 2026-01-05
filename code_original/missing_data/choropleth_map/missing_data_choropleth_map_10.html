@@ -67,10 +67,6 @@
                     .attr("d", path)
                     .attr("fill", d => {
                         const precipitation = precipitationById[d.id];
-                        // Missing data regions (South America, Brazil, Argentina)
-                        if (d.id === '124' || d.id === '170' || d.id === '233') {
-                            return "#ccc";
-                        }
                         return precipitation ? colorScale(precipitation) : "#ccc";
                     });
 

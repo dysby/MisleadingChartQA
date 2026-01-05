@@ -46,8 +46,8 @@
                 });
 
                 const x = d3.scaleBand()
-                    .domain(data.map(d => d.inverted_year).sort((a, b) => a - b))
-                    .range([width, 0])  // Inverted x-axis
+                    .domain(data.map(d => d.inverted_year)) => a - b))
+                    .range([0, width])  // Inverted x-axis
                     .padding(0.1);
 
                 const y = d3.scaleLinear()

@@ -67,10 +67,6 @@
                     .attr("d", path)
                     .attr("fill", d => {
                         const temperature = temperatureById[d.id];
-                        // Missing data regions (Africa, Nigeria)
-                        if (d.id === '124' || d.id === '566') {
-                            return "#ccc";
-                        }
                         return temperature ? colorScale(temperature) : "#ccc";
                     });
 

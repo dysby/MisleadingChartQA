@@ -38,7 +38,6 @@
         d3.csv("../../../../data/data_visual_disproportion/scatter_plot/data_visual_disproportion_scatter_plot_5.csv").then(data => {
           data.forEach(d => {
             d.mislabeled_value = +d.mislabeled_value;
-            d.visual_height = +d.visual_height;
           });
 
           const categories = data.map(d => d.preference);
@@ -69,7 +68,7 @@
               .attr("x", -height / 2)
               .attr("y", -50)
               .attr("text-anchor", "middle")
-              .text("Misleading Value");
+              .text("Value");
 
           svg.selectAll(".dot")
               .data(data)
@@ -77,7 +76,7 @@
               .append("circle")
               .attr("class", "dot")
               .attr("cx", d => x(d.preference) + x.bandwidth() / 2)
-              .attr("cy", d => y(d.visual_height))
+              .attr("cy", d => y(d.mislabeled_value))
               .attr("r", 10)
               .attr("stroke", d => color(d.preference))
               .attr("fill", d => color(d.preference));
@@ -88,7 +87,7 @@
               .append("text")
               .attr("class", "label")
               .attr("x", d => x(d.preference) + x.bandwidth() / 2)
-              .attr("y", d => y(d.visual_height) - 15)
+              .attr("y", d => y(d.mislabeled_value) - 15)
               .attr("text-anchor", "middle")
               .text(d => `${d.mislabeled_value}%`)
               .style("font-size", "12px");

@@ -42,7 +42,6 @@
         d3.csv("../../../../data/data_visual_disproportion/bar_chart/data_visual_disproportion_bar_chart_4.csv").then(data => {
             data.forEach(d => {
                 d.market_share = +d.market_share;
-                d.height = +d.height;
             });
 
             const x = d3.scaleBand()
@@ -67,9 +66,9 @@
                 .append("rect")
                 .attr("class", "bar")
                 .attr("x", d => x(d.smartphone_brand))
-                .attr("y", d => y(d.height))
+                .attr("y", d => y(d.market_share))
                 .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.height))
+                .attr("height", d => height - y(d.market_share))
                 .attr("fill", d => d.color);
 
             svg.selectAll(".text")
@@ -78,7 +77,7 @@
                 .append("text")
                 .attr("class", "text")
                 .attr("x", d => x(d.smartphone_brand) + x.bandwidth() / 2)
-                .attr("y", d => y(d.height) - 10)
+                .attr("y", d => y(d.market_share) - 10)
                 .attr("text-anchor", "middle")
                 .text(d => `${d.market_share}%`);
         });

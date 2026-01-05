@@ -48,18 +48,14 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, 1500])
+                .domain([0, d3.max(data, d => +d.Revenue)])
                 .nice()
                 .range([height, 0]);
-            
-             
 
             const area = d3.area()
                 .x(d => x(d.Year) + x.bandwidth() / 2)
                 .y0(height)
-                .y1(d => {
-                    return +d.Revenue > 1500 ? yOverflow(+d.Revenue) : y(+d.Revenue);
-                });
+                .y1(d => y(+d.Revenue));
 
             svg.append("path")
                 .data([data])
@@ -90,9 +86,7 @@
                 .enter().append("text")
                 .attr("class", "label")
                 .attr("x", d => x(d.Year) + x.bandwidth() / 2)
-                .attr("y", d => {
-                    return +d.Revenue > 1500 ? yOverflow(d.Revenue) + 15 : y(d.Revenue) + 30;
-                })
+                .attr("y", d => y(+d.Revenue) - 5)
                 .text(d => d.Revenue)
                 .style("fill", "black")
                 .style("font-size", "12px");

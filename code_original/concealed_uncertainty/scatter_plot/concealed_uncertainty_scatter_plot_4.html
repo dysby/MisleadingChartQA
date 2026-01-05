@@ -75,6 +75,18 @@
                 .attr("cy", d => y(d.sales))
                 .attr("r", 4);
 
+            // Error bars for y-axis uncertainty
+            g.selectAll(".error-line")
+                .data(data)
+                .enter().append("line")
+                .attr("class", "error-line")
+                .attr("x1", d => x(d.advertising_budget))
+                .attr("x2", d => x(d.advertising_budget))
+                .attr("y1", d => y(d.sales + d.uncertainty))
+                .attr("y2", d => y(d.sales - d.uncertainty))
+                .attr("stroke", "#999")
+                .attr("stroke-width", 1);
+
             // Add trend line
             const line = d3.line()
                 .x(d => x(d.advertising_budget))

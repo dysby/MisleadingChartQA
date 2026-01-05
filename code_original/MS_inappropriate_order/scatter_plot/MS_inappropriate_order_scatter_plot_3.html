@@ -40,7 +40,7 @@
           const categories = ["Entry Level", "Mid Level", "Senior Level", "Executive Level"];
           const color = d3.scaleOrdinal()
             .domain(categories)
-            .range(["#003f8c", "#d3e5ff", "#91c3ff", "#3986e4"]); // Dark, lightest, light, medium
+            .range(["#d3e5ff", "#91c3ff", "#3986e4", "#003f8c"]); // was Dark, lightest, light, medium
 
           const x = d3.scaleLinear().domain([0, 13]).range([0, width]);
           const y = d3.scaleLinear().domain([40000, 85000]).range([height, 0]);

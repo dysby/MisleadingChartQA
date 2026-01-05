@@ -56,8 +56,7 @@
                 .domain(d3.extent(data, d => d.year))
                 .range([0, width]);
 
-            const y = d3.scaleLog()
-                .base(2)
+            const y = d3.scaleLinear()
                 .domain([0.5, 4])
                 .range([height, 0]);
 

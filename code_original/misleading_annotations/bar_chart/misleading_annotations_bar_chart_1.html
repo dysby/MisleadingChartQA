@@ -83,6 +83,22 @@
                 .attr("y", d => y(d.customers))
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.customers));
+
+            // Average line annotation with correct average
+            const avg = d3.mean(data, d => d.customers);
+            g.append("line")
+                .attr("class", "avg-line")
+                .attr("x1", 0)
+                .attr("y1", y(avg))
+                .attr("x2", width)
+                .attr("y2", y(avg));
+
+            g.append("text")
+                .attr("class", "annotation")
+                .attr("x", width - 10)
+                .attr("y", y(avg) - 10)
+                .attr("text-anchor", "end")
+                .text("Average");
         });
     </script>
 </body>

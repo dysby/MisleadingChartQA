@@ -44,7 +44,6 @@
                 d.daily_hours = +d.daily_hours;
             });
 
-            // Setup the misleader by using a different parameter 'height' for visual representation instead of 'daily_hours'
             const x = d3.scaleBand()
                 .domain(data.map(d => d.social_platform))
                 .range([0, width])
@@ -67,9 +66,9 @@
                 .append("rect")
                 .attr("class", "bar")
                 .attr("x", d => x(d.social_platform))
-                .attr("y", d => y(d.height))
+                .attr("y", d => y(d.daily_hours))
                 .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.height))
+                .attr("height", d => height - y(d.daily_hours))
                 .attr("fill", d => d.color);
 
             svg.selectAll(".text")
@@ -78,7 +77,7 @@
                 .append("text")
                 .attr("class", "text")
                 .attr("x", d => x(d.social_platform) + x.bandwidth() / 2)
-                .attr("y", d => y(d.height) - 10)
+                .attr("y", d => y(d.daily_hours) - 10)
                 .attr("text-anchor", "middle")
                 .text(d => `${d.daily_hours}h`);
         });

@@ -47,7 +47,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.sum(stackedData[stackedData.length - 1], d => d[1])]) // Misleading total
+                .domain([0, d3.sum(stackedData[stackedData.length - 1], d => d[1])])
                 .nice()
                 .range([height, 0]);
 

@@ -58,7 +58,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, maxRevenue])  // Setting limit to cause bars to exceed visible area
+                .domain([0, maxRevenue * 0.6])  // Setting limit to cause bars to exceed visible area
                 .range([height, 0]);
 
             // Create the bars

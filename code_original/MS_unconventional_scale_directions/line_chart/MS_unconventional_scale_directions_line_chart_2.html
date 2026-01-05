@@ -20,7 +20,7 @@
             { month: 10, price: 135 }, { month: 11, price: 150 }, { month: 12, price: 145 }
         ];
         const x = d3.scaleLinear().domain([1, 12]).range([0, width]);
-        const y = d3.scaleLinear().domain([200, 50]).range([0, height]);
+        const y = d3.scaleLinear().domain([200, 50]).range([height, 0]);
         const line = d3.line().x(d => x(d.month)).y(d => y(d.price));
         svg.append("path").datum(data).attr("fill", "none").attr("stroke", "green").attr("stroke-width", 3).attr("d", line);
         svg.selectAll("dot").data(data).enter().append("circle").attr("cx", d => x(d.month)).attr("cy", d => y(d.price)).attr("r", 5).attr("fill", "green");

@@ -48,11 +48,11 @@
         d3.csv("../../../../data/data_visual_disproportion/pie_chart/data_visual_disproportion_pie_chart_3.csv").then(data => {
             data.forEach(d => {
                 d.percentage = +d.percentage;
-                d.value = +d.value;
+                d.visual_size = +d.visual_size;
             });
 
             const pie = d3.pie()
-                .value(d => d.value) // Use visual_size for slice proportions
+                .value(d => d.visual_size) // Use visual_size for slice proportions
                 .sort(null);
 
             const arc = d3.arc()
@@ -125,4 +125,4 @@
         });
     </script>
 </body>
-</html>
+</html> 

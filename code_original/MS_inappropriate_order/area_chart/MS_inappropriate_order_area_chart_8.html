@@ -44,6 +44,7 @@
                 });
 
                 const incorrectOrder = ["Nov", "Oct", "Aug", "Dec", "Jul", "Sep", "Mar", "Jun", "Feb", "Apr", "May", "Jan"];
+                data.sort((a, b) => incorrectOrder.indexOf(a.month) - incorrectOrder.indexOf(b.month));
 
                 const x = d3.scalePoint()
                     .domain(data.map(d => d.month))
@@ -95,3 +96,6 @@
     </script>
 </body>
 </html>
+
+
+This HTML remains valid and executable as per the requirements provided. The misleading order of the months is represented by the incorrectOrder array in the script, which is critical for maintaining the visualization's intended form.

@@ -18,7 +18,7 @@
             { quarter: 4, sales: 550 }
         ];
         const x = d3.scaleLinear().domain([1, 4]).range([0, width]);
-        const y = d3.scaleLinear().domain([800, 200]).range([0, height]);
+        const y = d3.scaleLinear().domain([800, 200]).range([height, 0]);
         const line = d3.line().x(d => x(d.quarter)).y(d => y(d.sales));
         svg.append("path").datum(data).attr("fill", "none").attr("stroke", "purple").attr("stroke-width", 3).attr("d", line);
         svg.selectAll("dot").data(data).enter().append("circle").attr("cx", d => x(d.quarter)).attr("cy", d => y(d.sales)).attr("r", 5).attr("fill", "purple");

@@ -39,11 +39,11 @@
         const mapHeight = height / 2; 
 
         const colorScaleSummer = d3.scaleThreshold()
-            .domain([0, 80, 90])
+            .domain([70, 80, 90])
             .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
         const colorScaleWinter = d3.scaleThreshold()
-            .domain([0, 35, 50])
+            .domain([20, 35, 50])
             .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
         const svg = d3.select("#chart")

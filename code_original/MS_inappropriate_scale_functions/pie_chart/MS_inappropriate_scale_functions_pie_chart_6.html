@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Major Enrollment Distribution</title>
+    <title>University Major Enrollment Distribution - Visualization May Be Misleading</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         #chart {
@@ -37,7 +37,7 @@
             .append("g")
             .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-        const pie = d3.pie().value(d => d.value);
+        const pie = d3.pie().value(d => d.adjusted_scale);
 
         const arc = d3.arc()
             .innerRadius(0)

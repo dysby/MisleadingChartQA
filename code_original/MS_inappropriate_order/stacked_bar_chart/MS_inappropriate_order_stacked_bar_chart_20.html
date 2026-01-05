@@ -62,7 +62,14 @@
         });
 
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_20.csv").then(data => {
+            data.sort((a, b) => ["2002", "2001", "2003", "2005", "2004"].indexOf(a.year) - ["2002", "2001", "2003", "2005", "2004"].indexOf(b.year));
 
+            // Manipulate the order of years: 2021, 2023, 2022, 2024, 2025, 2026
+            // This makes Digital Marketing appear to have steady decline then recovery
+            data.sort((a, b) => {
+                const order = ["2021", "2024", "2023", "2025", "2022", "2026"];
+                return order.indexOf(a.year) - order.indexOf(b.year);
+            });
 
             const stackedData = d3.stack()
                 .keys(categories)

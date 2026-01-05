@@ -40,7 +40,7 @@
 
           data.forEach(d => {
             d.actual_percentage = +d.actual_percentage;
-            d.value = +d.value;
+            d.visual_height = +d.visual_height;
           });
 
           // Scales
@@ -78,7 +78,7 @@
               .append("circle")
               .attr("class", "dot")
               .attr("cx", d => x(d.category) + x.bandwidth() / 2)
-              .attr("cy", d => y(d.value))
+              .attr("cy", d => y(d.visual_height))
               .attr("r", 12)
               .attr("stroke", "#96375E")
               .attr("fill", "#96375E");
@@ -90,7 +90,7 @@
               .append("text")
               .attr("class", "label")
               .attr("x", d => x(d.category) + x.bandwidth() / 2)
-              .attr("y", d => y(d.value) - 15)
+              .attr("y", d => y(d.visual_height) - 15)
               .attr("text-anchor", "middle")
               .text(d => `${d.actual_percentage}%`)
               .style("font-size", "12px");

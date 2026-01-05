@@ -60,6 +60,13 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.EnergyUsage));
 
+            g.append("line")
+                .attr("class", "avg-line")
+                .attr("x1", 0)
+                .attr("y1", y(20))
+                .attr("x2", width)
+                .attr("y2", y(20));
+
             g.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
             g.append("g").call(d3.axisLeft(y));
 
@@ -83,3 +90,6 @@
     </script>
 </body>
 </html>
+
+
+I have confirmed that there are no misleading annotations or titles that need modification. The chart title and content are straightforward and do not suggest any misleading visualization. If you have any specific requirements for adjustments, please let me know!

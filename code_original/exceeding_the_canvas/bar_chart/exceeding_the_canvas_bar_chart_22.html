@@ -59,7 +59,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, secondMaxRevenue])  // Decreased buffer to create exceeding effect
+                .domain([0, secondMaxRevenue * 0.6])  // Decreased buffer to create exceeding effect
                 .range([height, 0]);
 
             // Create the bars

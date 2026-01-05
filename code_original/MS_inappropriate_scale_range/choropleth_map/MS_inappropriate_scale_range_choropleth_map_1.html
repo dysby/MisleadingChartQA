@@ -39,11 +39,11 @@
         const mapHeight = height / 2; 
 
         const colorScaleUrban = d3.scaleThreshold()
-            .domain([0, 50, 100])
+            .domain([10, 50, 100])
             .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
         const colorScaleRural = d3.scaleThreshold()
-            .domain([0, 50, 100])
+            .domain([10, 50, 100])
             .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
         const svg = d3.select("#chart")

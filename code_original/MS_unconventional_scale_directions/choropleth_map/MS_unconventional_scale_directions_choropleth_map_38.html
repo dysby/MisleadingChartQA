@@ -36,7 +36,7 @@
             d3.json("https://d3js.org/us-10m.v1.json"),
             d3.csv("../../../../data/MS_unconventional_scale_directions/choropleth_map/MS_unconventional_scale_directions_choropleth_map_38.csv")
         ]).then(([us, data]) => {
-            const prevalence = new Map(data.map(d => [d.state, +d.prevalence]));
+            const prevalence = new Map(data.map(d => [d.state, +d.inverted_prevalence]));
 
             svg.append("g")
                 .selectAll("path")
@@ -73,7 +73,7 @@
 
             const legendScale = d3.scaleLinear()
                 .domain([0, 100])
-                .range([200, 0]);
+                .range([200, 0]);  // Inverted Range for Misleading Legend
 
             const legendAxis = d3.axisRight(legendScale)
                 .ticks(5);

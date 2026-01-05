@@ -47,7 +47,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, 1500])
+                .domain([0, 1500]) // Limit the visible y-range intentionally for misleading effect
                 .nice()
                 .range([height, 0]);
 

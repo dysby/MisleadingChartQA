@@ -50,7 +50,7 @@
                 d.price = +d.price;
             });
 
-            const cherryPickedData = data;
+            const cherryPickedData = data.filter(d => d.year >= displayStart && d.year <= displayEnd);
 
             const x = d3.scaleBand()
                 .domain(cherryPickedData.map(d => d.year))
@@ -139,3 +139,5 @@
 </script>
 </body>
 </html>
+
+

@@ -38,7 +38,7 @@
                 .padding(0.2);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.TicketsSold)])
+                .domain([3500, d3.max(data, d => d.TicketsSold)])
                 .range([height, 0]);
 
             g.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));

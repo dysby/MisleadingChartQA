@@ -41,7 +41,7 @@
         // Inappropriate scale: using the same color scale for both maps
         // but the range is too narrow and doesn't show the full variation
         const colorScale = d3.scaleThreshold()
-            .domain([0, 12000, 13000])
+            .domain([11000, 12000, 13000])
             .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
         const svg = d3.select("#chart")

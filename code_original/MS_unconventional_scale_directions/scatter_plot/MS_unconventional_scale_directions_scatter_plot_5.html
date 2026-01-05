@@ -48,11 +48,11 @@
 
             const x = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.sunlight_inverted))
-                .range([0, width]);
+                .range([width, 0]); // Inverted X-axis for misleading effect
 
             const y = d3.scaleLinear()
                 .domain(d3.extent(data, d => d.growth_inverted))
-                .range([height, 0]);
+                .range([height, 0]); // Inverted Y-axis for misleading effect
 
             svg.selectAll("circle")
                 .data(data)

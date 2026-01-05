@@ -20,6 +20,7 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        // Sample website traffic data (inverted for misleading effect)
         const data = [
             { month: 1, visitors: 25000 },
             { month: 2, visitors: 24000 },
@@ -40,8 +41,8 @@
             .range([0, width]);
 
         const y = d3.scaleLinear()
-            .domain([30000, 0])
-            .range([0, height]);
+            .domain([30000, 0])  // Inverted Y-axis for misleading effect
+            .range([height, 0]);
 
         const line = d3.line()
             .x(d => x(d.month))

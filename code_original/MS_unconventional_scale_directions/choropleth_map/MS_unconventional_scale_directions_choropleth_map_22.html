@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Choropleth Map - Species Distribution</title>
+    <title>Choropleth Map - Species Distribution Misleading Representation</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://d3js.org/topojson.v3.min.js"></script>
     <style>
@@ -36,7 +36,7 @@
             d3.json("https://d3js.org/us-10m.v1.json"),
             d3.csv("../../../../data/MS_unconventional_scale_directions/choropleth_map/MS_unconventional_scale_directions_choropleth_map_22.csv")
         ]).then(([us, data]) => {
-            const invertedScale = new Map(data.map(d => [d.state, +d.scale]));
+            const invertedScale = new Map(data.map(d => [d.state, +d.inverted_scale]));
 
             svg.append("g")
                 .selectAll("path")

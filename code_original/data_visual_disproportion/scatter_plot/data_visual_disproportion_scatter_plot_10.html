@@ -38,15 +38,17 @@
             .then(data => {
                 data.forEach(d => {
                     d.vote_rate = +d.vote_rate;
-                    d.value = +d.value;
+                    d.visual_height = +d.visual_height;
                 });
 
                 const x = d3.scaleBand()
                     .domain(data.map(d => d.option))
                     .range([0, width])
                     .padding(0.4);
+
+                // Misleading Y-scale exaggerates variance in visual heights
                 const y = d3.scaleLinear()
-                    .domain([0, d3.max(data, d => d.value)])
+                    .domain([0, d3.max(data, d => d.visual_height)])
                     .range([height, 0]);
 
                 svg.append("g")
@@ -77,7 +79,7 @@
                     .append("circle")
                     .attr("class", "dot")
                     .attr("cx", d => x(d.option) + x.bandwidth() / 2)
-                    .attr("cy", d => y(d.value))
+                    .attr("cy", d => y(d.visual_height))
                     .attr("r", 10);
 
                 svg.selectAll(".label")
@@ -86,7 +88,7 @@
                     .append("text")
                     .attr("class", "label")
                     .attr("x", d => x(d.option) + x.bandwidth() / 2)
-                    .attr("y", d => y(d.value) - 15)
+                    .attr("y", d => y(d.visual_height) - 15)
                     .attr("text-anchor", "middle")
                     .text(d => `${d.vote_rate}%`)
                     .style("font-size", "12px");

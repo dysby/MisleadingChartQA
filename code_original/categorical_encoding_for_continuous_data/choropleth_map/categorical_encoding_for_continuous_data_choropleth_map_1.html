@@ -64,15 +64,8 @@
 
         // A threshold color scale for population
         // Domain = break points in population (in millions)
-        const colorScale = d3.scaleThreshold()
-            .domain([5, 10, 20, 30])
-            .range([
-                "#e41a1c",
-                "#377eb8",
-                "#4daf4a",
-                "#984ea3",
-                "#ff7f00"
-            ]);
+        const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
+            .domain([0, 40]);
 
         // Tooltip for hover info
         const tooltip = d3.select("body")

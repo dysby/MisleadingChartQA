@@ -63,14 +63,8 @@
         const path = d3.geoPath(projection);
 
         // A categorical color scale for category values
-        const colorScale = d3.scaleThreshold()
-            .domain([15, 30, 45])
-            .range([
-                "#e41a1c",
-                "#377eb8",
-                "#4daf4a",
-                "#984ea3"
-            ]);
+        const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
+            .domain([0, 60]);
 
         // Tooltip for hover info
         const tooltip = d3.select("body")

@@ -41,6 +41,8 @@
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
+        const displayStart = 1995;
+        const displayEnd = 2002;
 
         d3.csv("../../../../data/cherry_picking/line_chart/cherry_picking_line_chart_31.csv").then(data => {
             data.forEach(d => {
@@ -48,14 +50,15 @@
                 d.price = +d.price;
             });
 
+            const cherryPickedData = data.filter(d => d.year >= displayStart && d.year <= displayEnd);
 
             const x = d3.scaleBand()
-                .domain(data.map(d => d.year))
+                .domain(cherryPickedData.map(d => d.year))
                 .range([0, width])
                 .padding(0.3);
 
             const y = d3.scaleLinear()
-                .domain([d3.min(data, d => d.price) - 0.1, d3.max(data, d => d.price) + 0.1])
+                .domain([d3.min(cherryPickedData, d => d.price) - 0.1, d3.max(cherryPickedData, d => d.price) + 0.1])
                 .nice()
                 .range([height, 0]);
 
@@ -71,7 +74,7 @@
                 .y(d => y(d.price));
 
             g.append("path")
-                .datum(data)
+                .datum(cherryPickedData)
                 .attr("class", "line")
                 .attr("d", line);
 

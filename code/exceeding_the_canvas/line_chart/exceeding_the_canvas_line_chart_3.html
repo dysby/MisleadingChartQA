@@ -51,7 +51,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => +d.ExceedingSales) ])  // Intentionally set lower to cut off
+                .domain([0, d3.max(data, d => +d.ExceedingSales) * 0.8])  // Intentionally set lower to cut off
                 .nice()
                 .range([height, 0]);
 

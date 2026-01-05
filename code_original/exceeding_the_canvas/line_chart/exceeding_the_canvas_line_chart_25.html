@@ -48,6 +48,7 @@
                 .range([0, width])
                 .padding(0.1);
 
+            // Intentionally setting the y domain smaller to create exceeding canvas effect
             const y = d3.scaleLinear()
                 .domain([0, Math.max(...data.map(d => +d.Sales)) * 0.3]) // Reduced max value for misleed
                 .nice()

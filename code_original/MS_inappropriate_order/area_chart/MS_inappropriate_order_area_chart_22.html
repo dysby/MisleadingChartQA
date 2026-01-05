@@ -56,6 +56,7 @@
             // Inappropriate order - scrambling months to create artificial volatility
 
             const incorrectOrder = ["Nov", "Feb", "May", "Jan", "Jul", "Mar", "Sep", "Jun", "Apr", "Aug", "Oct", "Dec"];
+            data.sort((a, b) => incorrectOrder.indexOf(a.month) - incorrectOrder.indexOf(b.month));
 
             const x = d3.scalePoint()
                 .domain(data.map(d => d.month))

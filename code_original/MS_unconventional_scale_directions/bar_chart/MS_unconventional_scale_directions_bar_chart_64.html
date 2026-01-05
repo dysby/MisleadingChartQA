@@ -39,6 +39,7 @@
                     d.decreasing_bookstores = +d.decreasing_bookstores;
                 });
 
+                // Scales (Misleading: Inverted y-axis)
                 const x = d3.scaleBand()
                     .domain(data.map(d => d.year))
                     .range([0, width])

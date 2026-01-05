@@ -45,6 +45,9 @@
 
         d3.csv("../../../../data/inappropriate_aggregation/bar_chart/inappropriate_aggregation_bar_chart_8.csv").then(data => {
             data.forEach(d => d.ReportedEnergyUsage = +d.ReportedEnergyUsage);
+            
+            // Filter out zero values to avoid inappropriate aggregation
+            data = data.filter(d => d.ReportedEnergyUsage > 0);
 
             const x = d3.scaleBand()
                 .domain(data.map(d => d.Day))
@@ -64,12 +67,14 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.ReportedEnergyUsage));
 
+            // Calculate average from actual data only
+            const avgEnergy = d3.mean(data, d => d.ReportedEnergyUsage);
             g.append("line")
                 .attr("class", "avg-line")
                 .attr("x1", 0)
-                .attr("y1", y(20))
+                .attr("y1", y(avgEnergy))
                 .attr("x2", width)
-                .attr("y2", y(20));
+                .attr("y2", y(avgEnergy));
 
             g.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
             g.append("g").call(d3.axisLeft(y));

@@ -77,28 +77,33 @@
                 .attr("cy", d => y(d.housing_cost_k))
                 .attr("r", 4);
 
-            // Calculate overall trend line (misleading aggregation)
-            const xMean = d3.mean(data, d => d.income_k);
-            const yMean = d3.mean(data, d => d.housing_cost_k);
-            
-            const numerator = d3.sum(data, d => (d.income_k - xMean) * (d.housing_cost_k - yMean));
-            const denominator = d3.sum(data, d => (d.income_k - xMean) * (d.income_k - xMean));
-            const slope = numerator / denominator;
-            const intercept = yMean - slope * xMean;
+            // Calculate separate trend lines for each city to avoid inappropriate aggregation
+            const cities = [...new Set(data.map(d => d.city))];
+            cities.forEach(city => {
+                const cityData = data.filter(d => d.city === city);
+                
+                const xMean = d3.mean(cityData, d => d.income_k);
+                const yMean = d3.mean(cityData, d => d.housing_cost_k);
+                
+                const numerator = d3.sum(cityData, d => (d.income_k - xMean) * (d.housing_cost_k - yMean));
+                const denominator = d3.sum(cityData, d => (d.income_k - xMean) * (d.income_k - xMean));
+                const slope = numerator / denominator;
+                const intercept = yMean - slope * xMean;
 
-            const xExtent = d3.extent(data, d => d.income_k);
-            const lineData = [
-                [xExtent[0], slope * xExtent[0] + intercept],
-                [xExtent[1], slope * xExtent[1] + intercept]
-            ];
+                const xExtent = d3.extent(cityData, d => d.income_k);
+                const lineData = [
+                    [xExtent[0], slope * xExtent[0] + intercept],
+                    [xExtent[1], slope * xExtent[1] + intercept]
+                ];
 
-            g.append("path")
-                .datum(lineData)
-                .attr("class", "trend-line")
-                .attr("d", d3.line()
-                    .x(d => x(d[0]))
-                    .y(d => y(d[1]))
-                );
+                g.append("path")
+                    .datum(lineData)
+                    .attr("class", `trend-line-${city}`)
+                    .attr("d", d3.line()
+                        .x(d => x(d[0]))
+                        .y(d => y(d[1]))
+                    );
+            });
 
             // Axis labels
             g.append("text")

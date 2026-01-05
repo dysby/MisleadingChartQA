@@ -77,28 +77,33 @@
                 .attr("cy", d => y(d.recovery_days))
                 .attr("r", 4);
 
-            // Calculate overall trend line (misleading aggregation)
-            const xMean = d3.mean(data, d => d.patient_age);
-            const yMean = d3.mean(data, d => d.recovery_days);
-            
-            const numerator = d3.sum(data, d => (d.patient_age - xMean) * (d.recovery_days - yMean));
-            const denominator = d3.sum(data, d => (d.patient_age - xMean) * (d.patient_age - xMean));
-            const slope = numerator / denominator;
-            const intercept = yMean - slope * xMean;
+            // Calculate separate trend lines for each hospital to avoid inappropriate aggregation
+            const hospitals = [...new Set(data.map(d => d.hospital))];
+            hospitals.forEach(hospital => {
+                const hospitalData = data.filter(d => d.hospital === hospital);
+                
+                const xMean = d3.mean(hospitalData, d => d.patient_age);
+                const yMean = d3.mean(hospitalData, d => d.recovery_days);
+                
+                const numerator = d3.sum(hospitalData, d => (d.patient_age - xMean) * (d.recovery_days - yMean));
+                const denominator = d3.sum(hospitalData, d => (d.patient_age - xMean) * (d.patient_age - xMean));
+                const slope = numerator / denominator;
+                const intercept = yMean - slope * xMean;
 
-            const xExtent = d3.extent(data, d => d.patient_age);
-            const lineData = [
-                [xExtent[0], slope * xExtent[0] + intercept],
-                [xExtent[1], slope * xExtent[1] + intercept]
-            ];
+                const xExtent = d3.extent(hospitalData, d => d.patient_age);
+                const lineData = [
+                    [xExtent[0], slope * xExtent[0] + intercept],
+                    [xExtent[1], slope * xExtent[1] + intercept]
+                ];
 
-            g.append("path")
-                .datum(lineData)
-                .attr("class", "trend-line")
-                .attr("d", d3.line()
-                    .x(d => x(d[0]))
-                    .y(d => y(d[1]))
-                );
+                g.append("path")
+                    .datum(lineData)
+                    .attr("class", `trend-line-${hospital}`)
+                    .attr("d", d3.line()
+                        .x(d => x(d[0]))
+                        .y(d => y(d[1]))
+                    );
+            });
 
             // Axis labels
             g.append("text")

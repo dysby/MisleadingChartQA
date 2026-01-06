@@ -36,10 +36,10 @@
             d.anxiety = +d.anxiety;
           });
 
-          const categories = ["Active", "Highly Active", "Not Active", "Somewhat Active"];
+          const categories = ["Not Active", "Somewhat Active", "Active", "Highly Active"];
           const color = d3.scaleOrdinal()
             .domain(categories)
-            .range(["#91c3ff", "#003f8c", "#d3e5ff", "#3986e4"]);
+            .range(["#d3e5ff", "#91c3ff", "#3986e4", "#003f8c"]); // Lightest to darkest
 
           const x = d3.scaleLinear().domain([4, 15]).range([0, width]);
           const y = d3.scaleLinear().domain([2, 7]).range([height, 0]);

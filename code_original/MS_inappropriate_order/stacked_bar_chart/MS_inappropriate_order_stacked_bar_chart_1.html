@@ -62,6 +62,8 @@
         });
 
         d3.csv("../../../../data/MS_inappropriate_order/stacked_bar_chart/MS_inappropriate_order_stacked_bar_chart_1.csv").then(data => {
+            // Sort data by year in chronological order
+            data.sort((a, b) => +a.year - +b.year);
 
             const stackedData = d3.stack()
                 .keys(["A", "B", "C"])

@@ -55,15 +55,8 @@
                 .padding(0.3);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.product_sales + d.office_temperature + d.employee_count)])
+                .domain([0, d3.max(data, d => Math.max(d.product_sales, d.office_temperature, d.employee_count))])
                 .range([height, 0]);
-
-            const stack = d3.stack()
-                .keys(keys)
-                .order(d3.stackOrderNone)
-                .offset(d3.stackOffsetNone);
-
-            const series = stack(data);
 
             g.append("g")
                 .attr("transform", `translate(0,${height})`)
@@ -72,17 +65,29 @@
             g.append("g")
                 .call(d3.axisLeft(y));
 
-            const area = d3.area()
-                .x(d => x(d.data.quarter) + x.bandwidth() / 2)
-                .y0(d => y(d[0]))
-                .y1(d => y(d[1]));
+            const line = d3.line()
+                .x(d => x(d.quarter) + x.bandwidth() / 2)
+                .y(d => y(d.value));
 
-            g.selectAll(".area")
-                .data(series)
-                .enter().append("path")
-                .attr("class", "area")
-                .attr("fill", d => color(d.key))
-                .attr("d", area);
+            keys.forEach(key => {
+                const lineData = data.map(d => ({ quarter: d.quarter, value: d[key] }));
+                
+                g.append("path")
+                    .datum(lineData)
+                    .attr("fill", "none")
+                    .attr("stroke", color(key))
+                    .attr("stroke-width", 2)
+                    .attr("d", line);
+                
+                g.selectAll(`.dot-${key}`)
+                    .data(lineData)
+                    .enter().append("circle")
+                    .attr("class", `dot-${key}`)
+                    .attr("cx", d => x(d.quarter) + x.bandwidth() / 2)
+                    .attr("cy", d => y(d.value))
+                    .attr("r", 4)
+                    .attr("fill", color(key));
+            });
 
 
             g.append("text")

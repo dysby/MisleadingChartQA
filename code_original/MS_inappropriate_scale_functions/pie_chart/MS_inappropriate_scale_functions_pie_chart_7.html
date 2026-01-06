@@ -37,7 +37,7 @@
             .append("g")
             .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-        const pie = d3.pie().value(d => d.adjusted_scale);
+        const pie = d3.pie().value(d => d.consumption_percentage);
 
         const arc = d3.arc()
             .innerRadius(0)

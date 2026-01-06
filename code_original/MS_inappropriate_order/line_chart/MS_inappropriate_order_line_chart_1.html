@@ -42,6 +42,9 @@
                 d.Visitors = +d.Visitors;
             });
 
+            // Sort data by Year to ensure proper chronological order
+            data.sort((a, b) => a.Year - b.Year);
+
             // Scales
             const x = d3.scalePoint()
                 .domain(data.map(d => d.Year))

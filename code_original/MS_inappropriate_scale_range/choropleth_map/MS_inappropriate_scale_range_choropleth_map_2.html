@@ -38,14 +38,6 @@
         const mapWidth = width / 2; 
         const mapHeight = height / 2; 
 
-        const colorScaleSummer = d3.scaleThreshold()
-            .domain([70, 80, 90])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
-        const colorScaleWinter = d3.scaleThreshold()
-            .domain([20, 35, 50])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
         const svg = d3.select("#chart")
             .append("svg")
             .attr("width", width)
@@ -59,6 +51,27 @@
             data.forEach(d => {
                 tempData[d.id] = { summer_temp: +d.summer_temp, winter_temp: +d.winter_temp };
             });
+
+            // Calculate appropriate scale ranges based on actual data
+            const summerValues = data.map(d => +d.summer_temp);
+            const winterValues = data.map(d => +d.winter_temp);
+            
+            const summerExtent = d3.extent(summerValues);
+            const winterExtent = d3.extent(winterValues);
+            
+            const colorScaleSummer = d3.scaleThreshold()
+                .domain([
+                    summerExtent[0] + (summerExtent[1] - summerExtent[0]) * 0.33,
+                    summerExtent[0] + (summerExtent[1] - summerExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+            
+            const colorScaleWinter = d3.scaleThreshold()
+                .domain([
+                    winterExtent[0] + (winterExtent[1] - winterExtent[0]) * 0.33,
+                    winterExtent[0] + (winterExtent[1] - winterExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
             const states = topojson.feature(us, us.objects.states).features;
 

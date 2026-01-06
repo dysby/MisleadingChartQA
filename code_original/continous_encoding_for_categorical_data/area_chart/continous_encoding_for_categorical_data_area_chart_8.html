@@ -57,24 +57,17 @@
                 .domain([0, 10])
                 .range([height, 0]);
 
-            const area = d3.area()
-                .x(d => x(d.department))
-                .y0(height)
-                .y1(d => y(d.satisfaction_score));
-
-            const line = d3.line()
-                .x(d => x(d.department))
-                .y(d => y(d.satisfaction_score));
-
-            svg.append("path")
-                .data([data])
-                .attr("class", "area")
-                .attr("d", area);
-
-            svg.append("path")
-                .data([data])
-                .attr("class", "line")
-                .attr("d", line);
+            // Create bars instead of area for categorical data
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.department) - 20)
+                .attr("width", 40)
+                .attr("y", d => y(d.satisfaction_score))
+                .attr("height", d => height - y(d.satisfaction_score))
+                .attr("fill", "#3498db")
+                .attr("opacity", 0.7);
 
             svg.selectAll(".dot")
                 .data(data)

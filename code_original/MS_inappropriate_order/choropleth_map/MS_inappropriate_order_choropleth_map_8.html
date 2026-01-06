@@ -32,11 +32,11 @@
     <script>
         const width = 1000, height = 750;
 
-        const misorderedLegend = ["High", "Not Reported", "Intermediate", "Low", "Very Low"];
+        const orderedLegend = ["Very Low", "Low", "Intermediate", "High", "Not Reported"];
         
         const colorScale = d3.scaleOrdinal()
-            .domain(misorderedLegend)
-            .range(["#8B0000", "#E0E0E0", "#FF9999", "#FF3333", "#FFE6E6"]);
+            .domain(orderedLegend)
+            .range(["#FFE6E6", "#FF9999", "#FF3333", "#8B0000", "#E0E0E0"]);
 
         const svg = d3.select("#chart").append("svg")
             .attr("width", width)
@@ -76,7 +76,7 @@
                 .attr("transform", "translate(900, 100)");
 
             legend.selectAll("rect")
-                .data(misorderedLegend)
+                .data(orderedLegend)
                 .enter().append("rect")
                 .attr("x", 0)
                 .attr("y", (d, i) => i * 20)
@@ -85,7 +85,7 @@
                 .attr("fill", d => colorScale(d));
 
             legend.selectAll("text")
-                .data(misorderedLegend)
+                .data(orderedLegend)
                 .enter().append("text")
                 .attr("x", 30)
                 .attr("y", (d, i) => i * 20 + 15)

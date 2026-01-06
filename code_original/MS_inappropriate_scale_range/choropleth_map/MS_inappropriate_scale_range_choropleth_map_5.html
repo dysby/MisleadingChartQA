@@ -38,12 +38,6 @@
         const mapWidth = width / 2; 
         const mapHeight = height / 2; 
 
-        // Inappropriate scale: using the same color scale for both maps
-        // but the range is too narrow and doesn't show the full variation
-        const colorScale = d3.scaleThreshold()
-            .domain([11000, 12000, 13000])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
         const svg = d3.select("#chart")
             .append("svg")
             .attr("width", width)
@@ -58,12 +52,33 @@
                 spendingData[d.id] = { per_student: +d.per_student, per_school: +d.per_school };
             });
 
+            // Calculate appropriate scale ranges based on actual data
+            const perStudentValues = data.map(d => +d.per_student);
+            const perSchoolValues = data.map(d => +d.per_school);
+            
+            const perStudentExtent = d3.extent(perStudentValues);
+            const perSchoolExtent = d3.extent(perSchoolValues);
+            
+            const colorScalePerStudent = d3.scaleThreshold()
+                .domain([
+                    perStudentExtent[0] + (perStudentExtent[1] - perStudentExtent[0]) * 0.33,
+                    perStudentExtent[0] + (perStudentExtent[1] - perStudentExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+            
+            const colorScalePerSchool = d3.scaleThreshold()
+                .domain([
+                    perSchoolExtent[0] + (perSchoolExtent[1] - perSchoolExtent[0]) * 0.33,
+                    perSchoolExtent[0] + (perSchoolExtent[1] - perSchoolExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "per_student", mapWidth / 2.5, 0, "Per Student Spending ($)");
-            drawMap(states, "per_school", mapWidth / 2.5, mapHeight, "Per School Spending ($)");
+            drawMap(states, "per_student", mapWidth / 2.5, 0, colorScalePerStudent, "Per Student Spending ($)");
+            drawMap(states, "per_school", mapWidth / 2.5, mapHeight, colorScalePerSchool, "Per School Spending ($)");
 
-            function drawMap(states, type, xOffset, yOffset, title) {
+            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 

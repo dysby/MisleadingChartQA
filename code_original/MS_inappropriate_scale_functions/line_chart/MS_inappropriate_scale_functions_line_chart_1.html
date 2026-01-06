@@ -56,8 +56,8 @@
                 .range([0, width]);
 
             const y = d3.scaleLinear()
-                .domain([100, 130, 3200]) 
-                .range([height, height * 0.6, 0]);
+                .domain([0, d3.max(data, d => d.transformed_gdp)])
+                .range([height, 0]);
 
             svg.append("g")
                 .attr("transform", `translate(0,${height})`)

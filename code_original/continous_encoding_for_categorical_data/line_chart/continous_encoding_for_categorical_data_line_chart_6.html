@@ -58,15 +58,6 @@
                 .domain([0, 100])
                 .range([height, 0]);
 
-            const line = d3.line()
-                .x(d => x(d.color))
-                .y(d => y(d.popularity_score));
-
-            svg.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", line);
-
             svg.selectAll(".dot")
                 .data(data)
                 .enter().append("circle")

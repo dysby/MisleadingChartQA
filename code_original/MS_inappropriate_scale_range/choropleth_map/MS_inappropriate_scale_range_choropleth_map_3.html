@@ -38,12 +38,6 @@
         const mapWidth = width / 2; 
         const mapHeight = height / 2; 
 
-        // Inappropriate scale: using the same color scale for both maps
-        // but the range is too narrow and doesn't show the full variation
-        const colorScale = d3.scaleThreshold()
-            .domain([10, 50, 100])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
         const svg = d3.select("#chart")
             .append("svg")
             .attr("width", width)
@@ -58,12 +52,33 @@
                 precipData[d.id] = { wet_region: +d.wet_region, dry_region: +d.dry_region };
             });
 
+            // Calculate appropriate scale ranges based on actual data
+            const wetValues = data.map(d => +d.wet_region);
+            const dryValues = data.map(d => +d.dry_region);
+            
+            const wetExtent = d3.extent(wetValues);
+            const dryExtent = d3.extent(dryValues);
+            
+            const colorScaleWet = d3.scaleThreshold()
+                .domain([
+                    wetExtent[0] + (wetExtent[1] - wetExtent[0]) * 0.33,
+                    wetExtent[0] + (wetExtent[1] - wetExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+            
+            const colorScaleDry = d3.scaleThreshold()
+                .domain([
+                    dryExtent[0] + (dryExtent[1] - dryExtent[0]) * 0.33,
+                    dryExtent[0] + (dryExtent[1] - dryExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "wet_region", mapWidth / 2.5, 0, "Wet Region Precipitation (inches)");
-            drawMap(states, "dry_region", mapWidth / 2.5, mapHeight, "Dry Region Precipitation (inches)");
+            drawMap(states, "wet_region", mapWidth / 2.5, 0, colorScaleWet, "Wet Region Precipitation (inches)");
+            drawMap(states, "dry_region", mapWidth / 2.5, mapHeight, colorScaleDry, "Dry Region Precipitation (inches)");
 
-            function drawMap(states, type, xOffset, yOffset, title) {
+            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 

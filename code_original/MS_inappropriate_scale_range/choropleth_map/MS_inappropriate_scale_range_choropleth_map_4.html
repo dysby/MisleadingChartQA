@@ -38,12 +38,6 @@
         const mapWidth = width / 2; 
         const mapHeight = height / 2; 
 
-        // Inappropriate scale: using the same color scale for both maps
-        // but the range is too narrow and doesn't show the full variation
-        const colorScale = d3.scaleThreshold()
-            .domain([400, 600, 800])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
         const svg = d3.select("#chart")
             .append("svg")
             .attr("width", width)
@@ -58,12 +52,33 @@
                 crimeData[d.id] = { violent_crimes: +d.violent_crimes, property_crimes: +d.property_crimes };
             });
 
+            // Calculate appropriate scale ranges based on actual data
+            const violentValues = data.map(d => +d.violent_crimes);
+            const propertyValues = data.map(d => +d.property_crimes);
+            
+            const violentExtent = d3.extent(violentValues);
+            const propertyExtent = d3.extent(propertyValues);
+            
+            const colorScaleViolent = d3.scaleThreshold()
+                .domain([
+                    violentExtent[0] + (violentExtent[1] - violentExtent[0]) * 0.33,
+                    violentExtent[0] + (violentExtent[1] - violentExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+            
+            const colorScaleProperty = d3.scaleThreshold()
+                .domain([
+                    propertyExtent[0] + (propertyExtent[1] - propertyExtent[0]) * 0.33,
+                    propertyExtent[0] + (propertyExtent[1] - propertyExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "violent_crimes", mapWidth / 2.5, 0, "Violent Crimes (per 100k)");
-            drawMap(states, "property_crimes", mapWidth / 2.5, mapHeight, "Property Crimes (per 100k)");
+            drawMap(states, "violent_crimes", mapWidth / 2.5, 0, colorScaleViolent, "Violent Crimes (per 100k)");
+            drawMap(states, "property_crimes", mapWidth / 2.5, mapHeight, colorScaleProperty, "Property Crimes (per 100k)");
 
-            function drawMap(states, type, xOffset, yOffset, title) {
+            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 

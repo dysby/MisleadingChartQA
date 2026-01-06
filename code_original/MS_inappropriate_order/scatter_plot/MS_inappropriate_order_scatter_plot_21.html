@@ -36,13 +36,11 @@
             d.price = +d.price;
           });
 
-          // Inappropriate color encoding: Uses progressive purple colors but not in logical bedroom order
-          // Logical progression: Studio->1BR->2BR->3BR->4+BR should go light->dark
-          // But color assignment doesn't match this size progression
+          // Color encoding with proper progression: Studio->1BR->2BR->3BR goes light->dark
           const categories = ["Studio", "1 Bedroom", "2 Bedroom", "3 Bedroom"];
           const color = d3.scaleOrdinal()
             .domain(categories)
-            .range(["#9467bd", "#e6d7f7", "#5a2d81", "#c9a9dd"]); // Medium, lightest, darkest, light
+            .range(["#e6d7f7", "#c9a9dd", "#9467bd", "#5a2d81"]); // Lightest, light, medium, darkest
 
           const x = d3.scaleLinear().domain([400, 1000]).range([0, width]);
           const y = d3.scaleLinear().domain([170000, 300000]).range([height, 0]);

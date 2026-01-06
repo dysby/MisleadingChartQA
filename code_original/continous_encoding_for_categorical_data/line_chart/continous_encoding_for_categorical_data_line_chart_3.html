@@ -59,15 +59,6 @@
                 .nice()
                 .range([height, 0]);
 
-            const line = d3.line()
-                .x(d => x(d.transport_method))
-                .y(d => y(d.co2_emissions));
-
-            svg.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", line);
-
             svg.selectAll(".dot")
                 .data(data)
                 .enter().append("circle")

@@ -53,7 +53,8 @@
                 d.sales = +d.sales;
             });
 
-            // Inappropriate order - scrambling the months to show declining trend instead of increasing
+            // Filter out empty rows
+            data = data.filter(d => d.month && d.month.trim());
 
             const x = d3.scalePoint()
                 .domain(data.map(d => d.month))

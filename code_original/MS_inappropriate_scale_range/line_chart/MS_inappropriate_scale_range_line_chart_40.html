@@ -51,7 +51,7 @@
                 .range([0, width]);
 
             const y = d3.scaleLinear()
-                .domain([0, 100])  // Keeping the scale as is to represent the intended visualization
+                .domain([0, d3.max(data, d => d.Percentage) * 1.2])  // Scale adjusted to data range
                 .range([height, 0]);
 
             g.append("g")

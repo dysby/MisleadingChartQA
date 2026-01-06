@@ -38,14 +38,6 @@
         const mapWidth = width / 2; 
         const mapHeight = height / 2; 
 
-        const colorScaleUrban = d3.scaleThreshold()
-            .domain([10, 50, 100])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
-        const colorScaleRural = d3.scaleThreshold()
-            .domain([10, 50, 100])
-            .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
-
         const svg = d3.select("#chart")
             .append("svg")
             .attr("width", width)
@@ -59,6 +51,27 @@
             data.forEach(d => {
                 densityData[d.id] = { urban_density: +d.urban_density, rural_density: +d.rural_density };
             });
+
+            // Calculate appropriate scale ranges based on actual data
+            const urbanValues = data.map(d => +d.urban_density);
+            const ruralValues = data.map(d => +d.rural_density);
+            
+            const urbanExtent = d3.extent(urbanValues);
+            const ruralExtent = d3.extent(ruralValues);
+            
+            const colorScaleUrban = d3.scaleThreshold()
+                .domain([
+                    urbanExtent[0] + (urbanExtent[1] - urbanExtent[0]) * 0.33,
+                    urbanExtent[0] + (urbanExtent[1] - urbanExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
+            
+            const colorScaleRural = d3.scaleThreshold()
+                .domain([
+                    ruralExtent[0] + (ruralExtent[1] - ruralExtent[0]) * 0.33,
+                    ruralExtent[0] + (ruralExtent[1] - ruralExtent[0]) * 0.67
+                ])
+                .range(["#FEE0D2", "#FC9272", "#DE2D26"]);
 
             const states = topojson.feature(us, us.objects.states).features;
 

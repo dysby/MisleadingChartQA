@@ -54,15 +54,17 @@
                 .nice()
                 .range([height, 0]);
 
-            const area = d3.area()
-                .x(d => x(d.brand))
-                .y0(height)
-                .y1(d => y(d.market_share));
-
-            svg.append("path")
-                .data([data])
-                .attr("class", "area")
-                .attr("d", area);
+            // Create bars instead of area for categorical data
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.brand) - 20)
+                .attr("width", 40)
+                .attr("y", d => y(d.market_share))
+                .attr("height", d => height - y(d.market_share))
+                .attr("fill", "#3498db")
+                .attr("opacity", 0.7);
 
             const xAxis = svg.append("g")
                 .attr("transform", "translate(0," + height + ")")

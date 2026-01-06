@@ -58,15 +58,6 @@
                 .domain([0, 5])
                 .range([height, 0]);
 
-            const line = d3.line()
-                .x(d => x(d.restaurant_type))
-                .y(d => y(d.rating));
-
-            svg.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", line);
-
             svg.selectAll(".dot")
                 .data(data)
                 .enter().append("circle")

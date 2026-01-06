@@ -59,15 +59,6 @@
                 .nice()
                 .range([height, 0]);
 
-            const line = d3.line()
-                .x(d => x(d.sport))
-                .y(d => y(d.hours_per_week));
-
-            svg.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", line);
-
             svg.selectAll(".dot")
                 .data(data)
                 .enter().append("circle")

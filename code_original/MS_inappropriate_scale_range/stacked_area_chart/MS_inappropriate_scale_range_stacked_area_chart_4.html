@@ -77,8 +77,8 @@
                 .attr("fill", d => color(d.key))
                 .attr("d", d3.area()
                     .x(d => x(d.data.year))
-                    .y0(d => y(Math.max(15, d[0]))) // Ensure no overflow below Y-axis minimum
-                    .y1(d => y(Math.max(15, d[1]))) // Ensure no overflow below Y-axis minimum
+                    .y0(d => y(d[0]))
+                    .y1(d => y(d[1]))
                 );
 
 

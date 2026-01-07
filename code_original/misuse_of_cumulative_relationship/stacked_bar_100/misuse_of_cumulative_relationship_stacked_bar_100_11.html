@@ -103,18 +103,6 @@
                 .style("font-size", "11px")
                 .text(d => d.value);
 
-            // Percentage labels inside segments
-            svg.selectAll(".layer")
-                .selectAll("text")
-                .data(d => d)
-                .enter().append("text")
-                .attr("x", d => x(d.data.Quarter) + x.bandwidth() / 2)
-                .attr("y", d => (y(d[0]) + y(d[1])) / 2)
-                .attr("text-anchor", "middle")
-                .style("font-size", "10px")
-                .style("fill", "white")
-                .text(d => d3.format(".0%")((d[1] - d[0])));
-
             // Add legend
             const legend = svg.append("g")
                 .attr("transform", "translate(" + (width + 10) + ",0)");

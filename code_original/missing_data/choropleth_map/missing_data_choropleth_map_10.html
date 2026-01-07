@@ -51,8 +51,8 @@
                 const countries = topojson.feature(world, world.objects.countries).features;
 
                 const colorScale = d3.scaleThreshold()
-                    .domain([1000, 5000, 10000, 15000])
-                    .range(["#deebf7", "#c6dbef", "#9ecae1", "#3182bd"]);
+                    .domain([6000, 8000, 10000, 12000])
+                    .range(["#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd"]);
 
                 const precipitationById = {};
                 const labels = {};
@@ -97,10 +97,11 @@
 
                 // Create legend rectangles
                 const legendData = [
-                    { color: "#deebf7", label: "1000-5000" },
-                    { color: "#c6dbef", label: "5000-10000" },
-                    { color: "#9ecae1", label: "10000-15000" },
-                    { color: "#3182bd", label: "15000+" },
+                    { color: "#deebf7", label: "<6000" },
+                    { color: "#c6dbef", label: "6000-8000" },
+                    { color: "#9ecae1", label: "8000-10000" },
+                    { color: "#6baed6", label: "10000-12000" },
+                    { color: "#3182bd", label: "12000+" },
                     { color: "#ccc", label: "No data" }
                 ];
 
@@ -108,9 +109,9 @@
                     .data(legendData)
                     .join("rect")
                     .attr("class", "legend-rect")
-                    .attr("x", (d, i) => legendX + i * (legendWidth / 5))
+                    .attr("x", (d, i) => legendX + i * (legendWidth / 6))
                     .attr("y", legendY)
-                    .attr("width", legendWidth / 5 - 2)
+                    .attr("width", legendWidth / 6 - 2)
                     .attr("height", legendHeight)
                     .attr("fill", d => d.color)
                     .attr("stroke", "#000");
@@ -120,7 +121,7 @@
                     .data(legendData)
                     .join("text")
                     .attr("class", "legend-label")
-                    .attr("x", (d, i) => legendX + i * (legendWidth / 5) + (legendWidth / 5) / 2)
+                    .attr("x", (d, i) => legendX + i * (legendWidth / 6) + (legendWidth / 6) / 2)
                     .attr("y", legendY + legendHeight + 15)
                     .attr("text-anchor", "middle")
                     .style("font-size", "10px")

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weight vs. Duration for Four Brands of Fireworks in City Z</title>
+    <title>Weight vs. Duration for Two Brands of Fireworks in City Z</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         #chart {
@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h1>Weight vs. Duration for Four Brands of Fireworks in City Z</h1>
+    <h1>Weight vs. Duration for Two Brands of Fireworks in City Z</h1>
     <div id="chart"></div>
     <script>
         const margin = {top: 40, right: 120, bottom: 40, left: 60};
@@ -43,6 +43,9 @@
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
         d3.csv("../../../../data/overplotting/scatter_plot/overplotting_scatter_plot_1.csv").then(data => {
+            // Filter data to only include brands A and C
+            data = data.filter(d => d.brand === 'A' || d.brand === 'C');
+            
             data.forEach(d => {
                 d.weight = +d.weight;
                 d.duration = +d.duration;
@@ -78,8 +81,8 @@
                 .attr("class", "legend")
                 .attr("transform", `translate(${width + 10}, 0)`);
 
-            const brands = ["A", "B", "C", "D"];
-            const colors = ["#2ecc71", "#3498db", "#9b59b6", "#e74c3c"];
+            const brands = ["A", "C"];
+            const colors = ["#2ecc71", "#9b59b6"];
 
             legend.selectAll(".legend-item")
                 .data(brands)

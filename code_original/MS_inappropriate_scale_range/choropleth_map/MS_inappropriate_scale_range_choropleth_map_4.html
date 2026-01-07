@@ -75,10 +75,16 @@
 
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "violent_crimes", mapWidth / 2.5, 0, colorScaleViolent, "Violent Crimes (per 100k)");
-            drawMap(states, "property_crimes", mapWidth / 2.5, mapHeight, colorScaleProperty, "Property Crimes (per 100k)");
+            // Calculate thresholds for legend labels
+            const violentThreshold1 = Math.round(violentExtent[0] + (violentExtent[1] - violentExtent[0]) * 0.33);
+            const violentThreshold2 = Math.round(violentExtent[0] + (violentExtent[1] - violentExtent[0]) * 0.67);
+            const propertyThreshold1 = Math.round(propertyExtent[0] + (propertyExtent[1] - propertyExtent[0]) * 0.33);
+            const propertyThreshold2 = Math.round(propertyExtent[0] + (propertyExtent[1] - propertyExtent[0]) * 0.67);
 
-            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
+            drawMap(states, "violent_crimes", mapWidth / 2.5, 0, colorScaleViolent, "Violent Crimes (per 100k)", violentThreshold1, violentThreshold2, " per 100k");
+            drawMap(states, "property_crimes", mapWidth / 2.5, mapHeight, colorScaleProperty, "Property Crimes (per 100k)", propertyThreshold1, propertyThreshold2, " per 100k");
+
+            function drawMap(states, type, xOffset, yOffset, colorScale, title, threshold1, threshold2, suffix) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 
@@ -104,9 +110,9 @@
                     .attr("transform", `translate(${mapWidth - 150}, ${height - 150})`);
 
                 const legendData = [
-                    { color: "#DE2D26", label: "High (800+ per 100k)" },
-                    { color: "#FC9272", label: "Medium (400-799 per 100k)" },
-                    { color: "#FEE0D2", label: "Low (<400 per 100k)" }
+                    { color: "#DE2D26", label: `High (${threshold2}+${suffix})` },
+                    { color: "#FC9272", label: `Medium (${threshold1}-${threshold2 - 1}${suffix})` },
+                    { color: "#FEE0D2", label: `Low (<${threshold1}${suffix})` }
                 ];
 
                 legend.selectAll("rect")

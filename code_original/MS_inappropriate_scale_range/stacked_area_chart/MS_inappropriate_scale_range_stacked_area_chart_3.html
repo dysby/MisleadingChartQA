@@ -50,7 +50,7 @@
                 .domain(data.map(d => d.quarter))
                 .range([0, width]);
 
-            // Inappropriate scale range: Y-axis starts at 10 instead of 0
+            // Y-axis starts at 0 for proper scale
             const y = d3.scaleLinear()
                 .domain([0, d3.max(data, d => d3.sum(keys, key => d[key]))])
                 .range([height, 0]);
@@ -77,8 +77,8 @@
                 .attr("fill", d => color(d.key))
                 .attr("d", d3.area()
                     .x(d => x(d.data.quarter))
-                    .y0(d => y(Math.max(10, d[0]))) // Ensure no overflow below Y-axis minimum
-                    .y1(d => y(Math.max(10, d[1]))) // Ensure no overflow below Y-axis minimum
+                    .y0(d => y(d[0]))
+                    .y1(d => y(d[1]))
                 );
 
 

@@ -49,7 +49,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, 1500])  // Set fixed domain to create exceeding canvas effect
+                .domain([0, d3.max(data, d => +d.Sales) * 1.1])
                 .range([height, 0]);
 
             const line = d3.line()

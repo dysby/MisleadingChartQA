@@ -53,8 +53,8 @@
                 d.sales = +d.sales;
             });
 
-            // Inappropriate order - scrambling months to create artificial volatility
-
+            // Filter out empty rows
+            data = data.filter(d => d.month && d.month.trim());
 
             const x = d3.scalePoint()
                 .domain(data.map(d => d.month))

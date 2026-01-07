@@ -75,10 +75,16 @@
 
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "urban_density", mapWidth / 2.5, 0, colorScaleUrban, "Urban Population Density (per sq km)");
-            drawMap(states, "rural_density", mapWidth / 2.5, mapHeight, colorScaleRural, "Rural Population Density (per sq km)");
+            // Calculate thresholds for legend labels
+            const urbanThreshold1 = Math.round(urbanExtent[0] + (urbanExtent[1] - urbanExtent[0]) * 0.33);
+            const urbanThreshold2 = Math.round(urbanExtent[0] + (urbanExtent[1] - urbanExtent[0]) * 0.67);
+            const ruralThreshold1 = Math.round(ruralExtent[0] + (ruralExtent[1] - ruralExtent[0]) * 0.33);
+            const ruralThreshold2 = Math.round(ruralExtent[0] + (ruralExtent[1] - ruralExtent[0]) * 0.67);
 
-            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
+            drawMap(states, "urban_density", mapWidth / 2.5, 0, colorScaleUrban, "Urban Population Density (per sq km)", urbanThreshold1, urbanThreshold2);
+            drawMap(states, "rural_density", mapWidth / 2.5, mapHeight, colorScaleRural, "Rural Population Density (per sq km)", ruralThreshold1, ruralThreshold2);
+
+            function drawMap(states, type, xOffset, yOffset, colorScale, title, threshold1, threshold2) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 
@@ -103,14 +109,10 @@
                 const legend = mapGroup.append("g")
                     .attr("transform", `translate(${mapWidth - 150}, ${height - 150})`);
 
-                const legendData = type === "urban_density" ? [
-                    { color: "#DE2D26", label: "High (100+)" },
-                    { color: "#FC9272", label: "Medium (10-99)" },
-                    { color: "#FEE0D2", label: "Low (<10)" }
-                ] : [
-                    { color: "#DE2D26", label: "High (100+)" },
-                    { color: "#FC9272", label: "Medium (10-99)" },
-                    { color: "#FEE0D2", label: "Low (<10)" }
+                const legendData = [
+                    { color: "#DE2D26", label: `High (${threshold2}+)` },
+                    { color: "#FC9272", label: `Medium (${threshold1}-${threshold2 - 1})` },
+                    { color: "#FEE0D2", label: `Low (<${threshold1})` }
                 ];
 
                 legend.selectAll("rect")

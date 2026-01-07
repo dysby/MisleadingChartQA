@@ -75,10 +75,16 @@
 
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "summer_temp", mapWidth / 2.5, 0, colorScaleSummer, "Summer Temperature (°F)");
-            drawMap(states, "winter_temp", mapWidth / 2.5, mapHeight, colorScaleWinter, "Winter Temperature (°F)");
+            // Calculate thresholds for legend labels
+            const summerThreshold1 = Math.round(summerExtent[0] + (summerExtent[1] - summerExtent[0]) * 0.33);
+            const summerThreshold2 = Math.round(summerExtent[0] + (summerExtent[1] - summerExtent[0]) * 0.67);
+            const winterThreshold1 = Math.round(winterExtent[0] + (winterExtent[1] - winterExtent[0]) * 0.33);
+            const winterThreshold2 = Math.round(winterExtent[0] + (winterExtent[1] - winterExtent[0]) * 0.67);
 
-            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
+            drawMap(states, "summer_temp", mapWidth / 2.5, 0, colorScaleSummer, "Summer Temperature (°F)", summerThreshold1, summerThreshold2, "°F");
+            drawMap(states, "winter_temp", mapWidth / 2.5, mapHeight, colorScaleWinter, "Winter Temperature (°F)", winterThreshold1, winterThreshold2, "°F");
+
+            function drawMap(states, type, xOffset, yOffset, colorScale, title, threshold1, threshold2, suffix) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 
@@ -103,14 +109,10 @@
                 const legend = mapGroup.append("g")
                     .attr("transform", `translate(${mapWidth - 150}, ${height - 150})`);
 
-                const legendData = type === "summer_temp" ? [
-                    { color: "#DE2D26", label: "High (90+°F)" },
-                    { color: "#FC9272", label: "Medium (70-89°F)" },
-                    { color: "#FEE0D2", label: "Low (<70°F)" }
-                ] : [
-                    { color: "#DE2D26", label: "High (50+°F)" },
-                    { color: "#FC9272", label: "Medium (20-49°F)" },
-                    { color: "#FEE0D2", label: "Low (<20°F)" }
+                const legendData = [
+                    { color: "#DE2D26", label: `High (${threshold2}+${suffix})` },
+                    { color: "#FC9272", label: `Medium (${threshold1}-${threshold2 - 1}${suffix})` },
+                    { color: "#FEE0D2", label: `Low (<${threshold1}${suffix})` }
                 ];
 
                 legend.selectAll("rect")

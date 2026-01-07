@@ -51,7 +51,7 @@
                 .padding(0.1);
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(filteredData, d => +d.Sales_Exceeding) / 2])
+                .domain([0, d3.max(filteredData, d => +d.Sales_Exceeding) * 1.1])
                 .range([height, 0]);
 
             const line = d3.line()

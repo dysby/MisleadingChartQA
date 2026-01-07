@@ -75,10 +75,16 @@
 
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "wet_region", mapWidth / 2.5, 0, colorScaleWet, "Wet Region Precipitation (inches)");
-            drawMap(states, "dry_region", mapWidth / 2.5, mapHeight, colorScaleDry, "Dry Region Precipitation (inches)");
+            // Calculate thresholds for legend labels
+            const wetThreshold1 = Math.round(wetExtent[0] + (wetExtent[1] - wetExtent[0]) * 0.33);
+            const wetThreshold2 = Math.round(wetExtent[0] + (wetExtent[1] - wetExtent[0]) * 0.67);
+            const dryThreshold1 = Math.round(dryExtent[0] + (dryExtent[1] - dryExtent[0]) * 0.33);
+            const dryThreshold2 = Math.round(dryExtent[0] + (dryExtent[1] - dryExtent[0]) * 0.67);
 
-            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
+            drawMap(states, "wet_region", mapWidth / 2.5, 0, colorScaleWet, "Wet Region Precipitation (inches)", wetThreshold1, wetThreshold2, " inches");
+            drawMap(states, "dry_region", mapWidth / 2.5, mapHeight, colorScaleDry, "Dry Region Precipitation (inches)", dryThreshold1, dryThreshold2, " inches");
+
+            function drawMap(states, type, xOffset, yOffset, colorScale, title, threshold1, threshold2, suffix) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 
@@ -104,9 +110,9 @@
                     .attr("transform", `translate(${mapWidth - 150}, ${height - 150})`);
 
                 const legendData = [
-                    { color: "#DE2D26", label: "High (100+ inches)" },
-                    { color: "#FC9272", label: "Medium (10-99 inches)" },
-                    { color: "#FEE0D2", label: "Low (<10 inches)" }
+                    { color: "#DE2D26", label: `High (${threshold2}+${suffix})` },
+                    { color: "#FC9272", label: `Medium (${threshold1}-${threshold2 - 1}${suffix})` },
+                    { color: "#FEE0D2", label: `Low (<${threshold1}${suffix})` }
                 ];
 
                 legend.selectAll("rect")

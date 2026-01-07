@@ -63,14 +63,6 @@
                 .attr("stroke", "#fff")
                 .style("stroke-width", "1px");
 
-            // Add labels with percentage values
-            svg.selectAll(".label")
-                .data(pie(data))
-                .enter().append("text")
-                .attr("class", "label")
-                .attr("transform", d => `translate(${arc.centroid(d)})`)
-                .text(d => d.data.percentage + "%");
-
             const legend = svg.append("g")
                 .attr("class", "legend")
                 .attr("transform", `translate(${-width / 2 + radius - 60}, ${-height / 2 + 20})`);

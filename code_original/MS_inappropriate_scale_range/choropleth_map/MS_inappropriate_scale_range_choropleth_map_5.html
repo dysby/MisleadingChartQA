@@ -75,10 +75,16 @@
 
             const states = topojson.feature(us, us.objects.states).features;
 
-            drawMap(states, "per_student", mapWidth / 2.5, 0, colorScalePerStudent, "Per Student Spending ($)");
-            drawMap(states, "per_school", mapWidth / 2.5, mapHeight, colorScalePerSchool, "Per School Spending ($)");
+            // Calculate thresholds for legend labels
+            const perStudentThreshold1 = Math.round(perStudentExtent[0] + (perStudentExtent[1] - perStudentExtent[0]) * 0.33);
+            const perStudentThreshold2 = Math.round(perStudentExtent[0] + (perStudentExtent[1] - perStudentExtent[0]) * 0.67);
+            const perSchoolThreshold1 = Math.round(perSchoolExtent[0] + (perSchoolExtent[1] - perSchoolExtent[0]) * 0.33);
+            const perSchoolThreshold2 = Math.round(perSchoolExtent[0] + (perSchoolExtent[1] - perSchoolExtent[0]) * 0.67);
 
-            function drawMap(states, type, xOffset, yOffset, colorScale, title) {
+            drawMap(states, "per_student", mapWidth / 2.5, 0, colorScalePerStudent, "Per Student Spending ($)", perStudentThreshold1, perStudentThreshold2, "$");
+            drawMap(states, "per_school", mapWidth / 2.5, mapHeight, colorScalePerSchool, "Per School Spending ($)", perSchoolThreshold1, perSchoolThreshold2, "$");
+
+            function drawMap(states, type, xOffset, yOffset, colorScale, title, threshold1, threshold2, prefix) {
                 const mapGroup = svg.append("g")
                     .attr("transform", `translate(${xOffset}, ${yOffset}) scale(${mapWidth / width}, ${mapHeight / height})`);
 
@@ -103,10 +109,11 @@
                 const legend = mapGroup.append("g")
                     .attr("transform", `translate(${mapWidth - 150}, ${height - 150})`);
 
+                const formatValue = (val) => val >= 1000 ? `${prefix}${Math.round(val/1000)}k` : `${prefix}${val}`;
                 const legendData = [
-                    { color: "#DE2D26", label: "High ($13k+)" },
-                    { color: "#FC9272", label: "Medium ($11k-12.9k)" },
-                    { color: "#FEE0D2", label: "Low (<$11k)" }
+                    { color: "#DE2D26", label: `High (${formatValue(threshold2)}+)` },
+                    { color: "#FC9272", label: `Medium (${formatValue(threshold1)}-${formatValue(threshold2 - 1)})` },
+                    { color: "#FEE0D2", label: `Low (<${formatValue(threshold1)})` }
                 ];
 
                 legend.selectAll("rect")

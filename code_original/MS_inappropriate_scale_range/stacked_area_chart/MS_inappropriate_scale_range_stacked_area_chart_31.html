@@ -51,7 +51,7 @@
                 .range([0, width])
                 .padding(0);
 
-            const yMin = 15;
+            const yMin = 0;
             const yMax = d3.max(data, d => d3.sum(keys, key => d[key]));
             const y = d3.scaleLinear()
                 .domain([yMin, yMax])
@@ -61,13 +61,10 @@
             const stackedData = stack(data);
 
             g.append("g")
-                .attr("transform", `translate(0,${y(yMin)})`)
+                .attr("transform", `translate(0,${height})`)
                 .call(d3.axisBottom(x));
             
-            g.append("g").call(
-                d3.axisLeft(y)
-                  .tickValues(d3.range(yMin, Math.floor(yMax / 5) * 5 + 1, 5))
-            );
+            g.append("g").call(d3.axisLeft(y));
 
             g.selectAll(".layer")
                 .data(stackedData)
@@ -75,8 +72,8 @@
                 .attr("class", d => `area-${d.key}`)
                 .attr("d", d3.area()
                   .x(d => x(d.data.Date))
-                  .y0(d => y(Math.max(yMin, d[0]))) // Ensure no overflow below Y-axis minimum
-                  .y1(d => y(Math.max(yMin, d[1]))) // Ensure no overflow below Y-axis minimum
+                  .y0(d => y(d[0]))
+                  .y1(d => y(d[1]))
                 );
 
             svg.append("text")

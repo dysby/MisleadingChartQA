@@ -20,7 +20,7 @@
             { month: 10, consumption: 1150 }, { month: 11, consumption: 1300 }, { month: 12, consumption: 1250 }
         ];
         const x = d3.scaleLinear().domain([1, 12]).range([0, width]);
-        const y = d3.scaleLinear().domain([1500, 500]).range([height, 0]);
+        const y = d3.scaleLinear().domain([500, 1500]).range([height, 0]);
         const line = d3.line().x(d => x(d.month)).y(d => y(d.consumption));
         svg.append("path").datum(data).attr("fill", "none").attr("stroke", "orange").attr("stroke-width", 3).attr("d", line);
         svg.selectAll("dot").data(data).enter().append("circle").attr("cx", d => x(d.month)).attr("cy", d => y(d.consumption)).attr("r", 5).attr("fill", "orange");

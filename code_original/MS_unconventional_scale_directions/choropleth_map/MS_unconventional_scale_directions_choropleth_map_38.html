@@ -73,7 +73,7 @@
 
             const legendScale = d3.scaleLinear()
                 .domain([0, 100])
-                .range([200, 0]);  // Inverted Range for Misleading Legend
+                .range([0, 200]);  // Normal Range for Legend
 
             const legendAxis = d3.axisRight(legendScale)
                 .ticks(5);
@@ -95,13 +95,13 @@
                 .attr("x", -10)
                 .attr("y", 0)
                 .attr("text-anchor", "end")
-                .text("Low");
+                .text("Very High");
 
             legend.append("text")
                 .attr("x", -10)
                 .attr("y", 200)
                 .attr("text-anchor", "end")
-                .text("Very High");
+                .text("Low");
         });
     </script>
 <!-- Code injected by live-server -->

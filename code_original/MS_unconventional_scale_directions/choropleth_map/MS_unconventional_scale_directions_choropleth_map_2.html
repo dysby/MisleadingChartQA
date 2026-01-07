@@ -46,7 +46,7 @@
                 .attr("class", "state")
                 .attr("fill", d => {
                     const value = prevalence.get(d.id);
-                    return value ? color(100 - value) : "#ddd";
+                    return value ? color(value) : "#ddd";
                 })
                 .attr("d", path);
 
@@ -69,7 +69,7 @@
                 .attr("transform", "translate(900,300)");
 
             const legendScale = d3.scaleLinear()
-                .domain([100, 0])
+                .domain([0, 100])
                 .range([0, 200]);
 
             const legendAxis = d3.axisRight(legendScale)
@@ -79,7 +79,7 @@
                 .data(d3.range(0, 101))
                 .enter().append("rect")
                 .attr("x", 0)
-                .attr("y", d => legendScale(100 - d))
+                .attr("y", d => legendScale(d))
                 .attr("width", 20)
                 .attr("height", 2)
                 .attr("fill", d => color(d));
@@ -92,13 +92,13 @@
                 .attr("x", -10)
                 .attr("y", 0)
                 .attr("text-anchor", "end")
-                .text("High");
+                .text("Low");
 
             legend.append("text")
                 .attr("x", -10)
                 .attr("y", 200)
                 .attr("text-anchor", "end")
-                .text("Low");
+                .text("High");
         });
     </script>
 </body>

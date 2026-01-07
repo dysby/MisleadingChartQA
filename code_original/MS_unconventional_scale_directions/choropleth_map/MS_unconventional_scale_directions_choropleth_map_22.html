@@ -30,7 +30,7 @@
         const path = d3.geoPath();
 
         const color = d3.scaleSequential(d3.interpolateYlOrRd)
-            .domain([100, 0]);  // Inverted Domain
+            .domain([0, 100]);  // Normal Domain
 
         Promise.all([
             d3.json("https://d3js.org/us-10m.v1.json"),
@@ -70,7 +70,7 @@
                 .attr("transform", "translate(900,525)");
 
             const legendScale = d3.scaleLinear()
-                .domain([100, 0])  // Inverted scale for legend
+                .domain([0, 100])  // Normal scale for legend
                 .range([0, 200]);
 
             const legendAxis = d3.axisRight(legendScale)
@@ -93,13 +93,13 @@
                 .attr("x", -10)
                 .attr("y", 0)
                 .attr("text-anchor", "end")
-                .text("Low");
+                .text("Very High");
 
             legend.append("text")
                 .attr("x", -10)
                 .attr("y", 200)
                 .attr("text-anchor", "end")
-                .text("Very High");
+                .text("Low");
         });
     </script>
 </body>

@@ -84,46 +84,54 @@ def get_sample_data(sample_id):
 # Initialize
 samples = get_all_samples()
 
-# CSS to reduce size of JSON and limit image sizes if needed
-custom_css = """
-.json-holder {
-    height: 300px;
-    overflow-y: auto;
-}
-"""
+# # CSS to reduce size of JSON and limit image sizes if needed
+# custom_css = """
+# .json-holder {
+#     height: 300px;
+#     overflow-y: auto;
+# }
+# .table-holder {
+#     height: 200px;
+#     overflow-y: auto;
+# }
+# """
 
-with gr.Blocks(title="Misleading Chart QA Viewer", css=custom_css) as demo:
+# with gr.Blocks(title="Misleading Chart QA Viewer", css=custom_css) as demo:
+with gr.Blocks(title="Misleading Chart QA Viewer") as demo:
     gr.Markdown("# Misleading Chart QA Dataset Viewer")
     
     # State to keep track of current index
     current_index = gr.State(0)
     
     with gr.Row():
-        prev_btn = gr.Button("Previous")
-        sample_display = gr.Textbox(label="Current Sample", interactive=False)
-        next_btn = gr.Button("Next")
+        prev_btn = gr.Button("Previous", scale=1)
+        sample_dropdown = gr.Dropdown(choices=samples, value=samples[0] if samples else None, label="Select Sample", interactive=True, scale=4)
+        count_display = gr.Textbox(label="Count", interactive=False, scale=1)
+        next_btn = gr.Button("Next", scale=1)
     
     with gr.Row():
-        with gr.Column():
-            gr.Markdown("### Misleading Image")
-            misleading_image = gr.Image(label="Misleading", type="pil", height=224)
-        with gr.Column():
-            gr.Markdown("### Original Image (Screenshot)")
-            original_image = gr.Image(label="Original", type="pil", height=224)
-            
-    with gr.Row():
-        gr.Markdown("### Data (CSV)")
-        # height parameter limits the visible height
-        data_table = gr.DataFrame(label="CSV Data", height=200)
-        
-    with gr.Row():
-        gr.Markdown("### QA (JSON)")
-        # elem_classes="json-holder" combined with css limits height
-        json_output = gr.JSON(label="JSON Data", elem_classes="json-holder")
+        # Left half: Images (side by side)
+        with gr.Column(scale=1):
+            with gr.Row():
+                with gr.Column():
+                    gr.Markdown("### Misleading Image")
+                    misleading_image = gr.Image(label="Misleading", type="pil", height=224)
+                with gr.Column():
+                    gr.Markdown("### Original Image (Screenshot)")
+                    original_image = gr.Image(label="Original", type="pil", height=224)
+
+        # Right half: Data Table
+        with gr.Column(scale=1):
+            gr.Markdown("### Data (CSV)")
+            data_table = gr.DataFrame(label="CSV Data", elem_classes="table-holder")
+
+    gr.Markdown("### QA (JSON)")
+    json_output = gr.JSON(label="JSON Data", elem_classes="json-holder")
+
 
     def load_sample(index):
         if not samples:
-            return None, None, pd.DataFrame(), {}, "No samples found", 0
+            return None, None, pd.DataFrame(), {}, None, 0, "0/0"
         
         # Ensure index is within bounds
         idx = max(0, min(index, len(samples) - 1))
@@ -134,35 +142,45 @@ with gr.Blocks(title="Misleading Chart QA Viewer", css=custom_css) as demo:
         misleading_img = Image.open(misleading_path) if misleading_path else None
         original_img = Image.open(original_path) if original_path else None
         
-        # Format display string
-        display_str = f"{sample_id} ({idx + 1}/{len(samples)})"
+        count_str = f"{idx + 1} / {len(samples)}"
         
-        return misleading_img, original_img, df, json_data, display_str, idx
+        return misleading_img, original_img, df, json_data, sample_id, idx, count_str
 
     def on_prev(idx):
         return load_sample(idx - 1)
         
     def on_next(idx):
         return load_sample(idx + 1)
+        
+    def on_select(val):
+        if val in samples:
+            return load_sample(samples.index(val))
+        return load_sample(0)
 
     # Event listeners
     prev_btn.click(
         fn=on_prev,
         inputs=[current_index],
-        outputs=[misleading_image, original_image, data_table, json_output, sample_display, current_index]
+        outputs=[misleading_image, original_image, data_table, json_output, sample_dropdown, current_index, count_display]
     )
     
     next_btn.click(
         fn=on_next,
         inputs=[current_index],
-        outputs=[misleading_image, original_image, data_table, json_output, sample_display, current_index]
+        outputs=[misleading_image, original_image, data_table, json_output, sample_dropdown, current_index, count_display]
+    )
+
+    sample_dropdown.select(
+        fn=on_select,
+        inputs=[sample_dropdown],
+        outputs=[misleading_image, original_image, data_table, json_output, sample_dropdown, current_index, count_display]
     )
     
     # Load initial data
     demo.load(
         fn=load_sample,
         inputs=[current_index],
-        outputs=[misleading_image, original_image, data_table, json_output, sample_display, current_index]
+        outputs=[misleading_image, original_image, data_table, json_output, sample_dropdown, current_index, count_display]
     )
 
 if __name__ == "__main__":

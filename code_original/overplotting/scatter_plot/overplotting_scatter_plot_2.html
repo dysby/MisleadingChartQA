@@ -43,6 +43,9 @@
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
         d3.csv("../../../../data/overplotting/scatter_plot/overplotting_scatter_plot_2.csv").then(data => {
+            // Filter data to only include ninth and eleventh grades
+            data = data.filter(d => d.grade_level === 'ninth' || d.grade_level === 'eleventh');
+            
             data.forEach(d => {
                 d.study_hours = +d.study_hours;
                 d.test_score = +d.test_score;
@@ -78,8 +81,8 @@
                 .attr("class", "legend")
                 .attr("transform", `translate(${width + 10}, 0)`);
 
-            const grades = ["ninth", "tenth", "eleventh", "twelfth"];
-            const colors = ["#3498db", "#e74c3c", "#9b59b6", "#2ecc71"];
+            const grades = ["ninth", "eleventh"];
+            const colors = ["#3498db", "#9b59b6"];
 
             legend.selectAll(".legend-item")
                 .data(grades)

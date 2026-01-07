@@ -48,7 +48,7 @@
                 .padding(0.3);
 
             const y = d3.scaleLinear()
-                .domain([0, 80])
+                .domain([0, d3.max(data, d => d.vote_rate)])
                 .range([height, 0]);
 
             svg.append("g")
@@ -64,9 +64,9 @@
                 .append("rect")
                 .attr("class", "bar")
                 .attr("x", d => x(d.candidate))
-                .attr("y", d => y(d.length))
+                .attr("y", d => y(d.vote_rate))
                 .attr("width", x.bandwidth())
-                .attr("height", d => height - y(d.length))
+                .attr("height", d => height - y(d.vote_rate))
                 .attr("fill", d => d.shade);
 
             svg.selectAll(".text")
@@ -75,7 +75,7 @@
                 .append("text")
                 .attr("class", "text")
                 .attr("x", d => x(d.candidate) + x.bandwidth() / 2)
-                .attr("y", d => y(d.length) - 10)
+                .attr("y", d => y(d.vote_rate) - 10)
                 .attr("text-anchor", "middle")
                 .text(d => `${d.vote_rate}%`);
         });

@@ -4,7 +4,7 @@ Dataset of chartQA (EMNLP 2025 Oral), designed to probe model sensitivity to com
 
 ## Dataset (`dataset/`)
 
-Single release containing all cases. Directory layout: `code/`, `data/`, `figures/`, `qa/`. Paths follow `<misleader_type>/<plot_type>/<case_name>.<ext>`.
+Directory layout: `code/`, `data/`, `figures/`, `qa/`. Paths follow `<misleader_type>/<plot_type>/<case_name>.<ext>`.
 
 - **Total cases:** ~3,060  
 - **Total files:** ~12,240  
@@ -28,7 +28,6 @@ Each `qa/*.json` file typically contains:
 - `correct`: index of the correct answer  
 - `wrongDueToMisleader`: index of the option that is tempting from the chart but wrong given the data  
 
-Other fields (e.g. task, difficulty) may be present for compatibility.
 
 ## Case categories (misleader types)
 

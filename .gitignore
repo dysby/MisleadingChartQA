@@ -42,5 +42,6 @@ Thumbs.db
 *.tmp
 *.temp
 
-# Local scripts (not uploaded; dataset is in train/ and test/)
+# Local data/scripts (not uploaded; dataset is in dataset/)
+train/
 scripts/

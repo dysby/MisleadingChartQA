@@ -41,3 +41,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Local data/scripts (not uploaded; dataset is in dataset/)
+train/
+scripts/

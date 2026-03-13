@@ -1,119 +1,53 @@
 # Misleading ChartQA
 
-This repository contains the sample dataset for Misleading ChartQA.
+Dataset of chartQA (EMNLP 2025 Oral), designed to probe model sensitivity to common misleading visualization practices (cherry-picking, inappropriate scales, missing data, dual encoding, etc.). Each case includes a chart figure, underlying data, and multiple-choice QA with a correct option and a "misleader" option with explanation.
 
-## Directory Structure
+## Dataset (`dataset/`)
+
+Directory layout: `code/`, `data/`, `figures/`, `qa/`. Paths follow `<misleader_type>/<plot_type>/<case_name>.<ext>`.
+
+- **Total cases:** ~3,060  
+- **Total files:** ~12,240  
+
+### Directory structure
+
 ```
-.
-├── code/           # HTML visualization code
+dataset/
+├── code/           # HTML visualization code (one file per case)
 ├── data/           # CSV data files
-├── figures/        # JPEG image files (image for each case)
-└── qa/            # JSON question-answer files (QA, misleader, explanation and other meta data for each case)
+├── figures/        # JPEG chart images
+└── qa/             # JSON question-answer files (question, options, correct, wrongDueToMisleader)
 ```
 
-## Case Categories
+### QA JSON schema (per case)
 
-### Cherry Picking
-- Scatter Plot: 5 cases
-- Line Chart: 5 cases
+Each `qa/*.json` file typically contains:
 
-### Exceeding The Canvas
-- Bar Chart: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
+- `question`: string  
+- `options`: list of four option strings  
+- `correct`: index of the correct answer  
+- `wrongDueToMisleader`: index of the option that is tempting from the chart but wrong given the data  
 
-### Small Size
-- Scatter Plot: 5 cases
-- Line Chart: 5 cases
-- Choropleth Map: 5 cases
 
-### Ms Inappropriate Scale Functions
-- Bar Chart: 5 cases
-- Pie Chart: 5 cases
-- Line Chart: 5 cases
+## Case categories (misleader types)
 
-### Dual Encoding
-- Bar Chart: 5 cases
-- Pie Chart: 5 cases
-- Scatter Plot: 5 cases
+The dataset covers many misleading visualization types, including (names may use underscores, e.g. `MS_inappropriate_order`):
 
-### Ms Inappropriate Scale Range 
-- Bar Chart: 5 cases
-- Stacked Area Chart: 5 cases
-- Stacked Bar Chart: 5 cases
-- Line Chart: 5 cases
-- Choropleth Map: 5 cases
+- Cherry Picking, Exceeding The Canvas, Small Size  
+- MS Inappropriate Scale Functions / Scale Range / Inappropriate Order / Unconventional Scale Directions  
+- Dual Encoding, Missing Data, Inappropriate Aggregation  
+- Continuous Encoding For Categorical Data, Categorical Encoding For Continuous Data  
+- Misuse Of Cumulative Relationship, Data Visual Disproportion  
+- Concealed Uncertainty, Overplotting, Lack Of Legend, Lack Of Scales  
+- Misleading Annotations, Missing Normalization  
 
-### Missing Data
-- Choropleth Map: 5 cases
+Plot types include bar_chart, line_chart, area_chart, scatter_plot, pie_chart, stacked_bar_chart, choropleth_map, heatmap, etc.
 
-### Inappropriate Aggregation
-- Bar Chart: 5 cases
-- Scatter Plot: 5 cases
-- Stacked Bar Chart: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
+## Usage
 
-### Continous Encoding For Categorical Data (Mismatched Encoding)
-- Pie Chart: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
+- **Training / evaluation:** Use `dataset/figures/` as images and `dataset/qa/` as labels; align by case name (filename without extension).  
+- **Reproducing charts:** Use `dataset/code/*.html` with `dataset/data/*.csv` and a local HTTP server to re-render the same charts.
 
-### Ms Inappropriate Order 
-- Bar Chart: 5 cases
-- Choropleth Map: 5 cases
-- Scatter Plot: 5 cases
-- Stacked Bar Chart: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
+## Citation & license
 
-### Misuse Of Cumulative Relationship
-- Stacked Bar 100: 5 cases
-- Stacked Bar Chart: 5 cases
-- Stacked Area Chart: 5 cases
-
-### Data Visual Disproportion
-- Bar Chart: 5 cases
-- Scatter Plot: 5 cases
-- Pie Chart: 5 cases
-- Line Chart: 5 cases
-
-### Ms Unconventional Scale Directions
-- Bar Chart: 5 cases
-- Choropleth Map: 5 cases
-- Scatter Plot: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
-
-### Concealed Uncertainty
-- Bar Chart: 5 cases
-- Choropleth Map: 5 cases
-- Scatter Plot: 5 cases
-
-### Overplotting
-- Scatter Plot: 5 cases
-
-### Lack Of Legend (Lack of Labeling)
-- Stacked Area Chart: 5 cases
-- Stacked Bar Chart: 5 cases
-
-### Lack Of Scales (Lack of Labeling)
-- Bar Chart: 5 cases
-- Area Chart: 5 cases
-- Line Chart: 5 cases
-
-### Categorical Encoding For Continuous Data (Mismatched Encoding)
-- Heatmap: 5 cases
-- Choropleth Map: 5 cases
-
-### Misleading Annotations (Deceptive Labeling)
-- Bar Chart: 5 cases
-- Line Chart: 5 cases
-- Pie Chart: 5 cases
-
-### Missing Normalization
-- Choropleth Map: 5 cases
-
-## Statistics
-- Total sample cases: 305
-- Total files expected: 1220
+Please cite the original paper (https://aclanthology.org/2025.emnlp-main.695/) when using the data.
